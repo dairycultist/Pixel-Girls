@@ -1,12 +1,14 @@
-# Popuko's Props mod
+# Popuko's Props [StationAPI]
 
 adds small stuff I want to the game
 
-added
+[stationapi guide](https://stationapi.wiki/)
+
+### Added
 
 - slime hammer (for launching yourself and others)
 
-planned
+### Planned
 
 - bouncy ball
 - guns?
@@ -15,5 +17,3 @@ planned
 - music disc(s)
 - cool armor
 - cool weapons
-
-[wiki](https://stationapi.wiki/)
