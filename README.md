@@ -2,12 +2,17 @@
 
 adds small stuff I want to the game
 
-planned
+added
 
 - slime hammer (for launching yourself and others)
+
+planned
+
 - guns
-- couch
-- stone bricks
+- couch?
+- stone bricks?
 - music disc(s)
+- cool armor
+- cool weapons
 
 [wiki](https://stationapi.wiki/)
