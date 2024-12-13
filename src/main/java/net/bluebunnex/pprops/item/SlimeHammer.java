@@ -3,6 +3,7 @@ package net.bluebunnex.pprops.item;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
@@ -27,7 +28,7 @@ public class SlimeHammer extends TemplateItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 
-        launch(stack, target, attacker);
+        launch(stack, target, attacker, 1.5);
 
         return true;
     }
@@ -35,29 +36,36 @@ public class SlimeHammer extends TemplateItem {
     @Override
     public boolean preMine(ItemStack stack, BlockState blockState, int x, int y, int z, int side, PlayerEntity player) {
 
-        launch(stack, null, player);
+        launch(stack, null, player, 1.5);
 
         return true;
     }
 
-    private void launch(ItemStack stack, @Nullable LivingEntity hit, LivingEntity hitter) {
+    private void launch(ItemStack stack, @Nullable LivingEntity hit, LivingEntity hitter, double force) {
 
         stack.damage(1, null);
 
-        // TODO play slime sound, make particles
+        // play slime sound
+        hitter.world.playSound(hitter, "mob.slime", 0.6f, 1.0f + (float) Math.random() * 0.2f);
+
+        // make particles
+        for (int i=0; i<5; i++) {
+
+            hitter.world.addParticle("slime", hitter.x, hitter.y, hitter.z, Math.random() - 0.5, 0.5 + Math.random() * 0.1, Math.random() - 0.5);
+        }
 
         // launch hitter backwards and hit forwards
         Vec3d look = hitter.getLookVector();
 
-        hitter.velocityX = -look.x;
-        hitter.velocityY = -look.y;
-        hitter.velocityZ = -look.z;
+        hitter.velocityX = -look.x * force;
+        hitter.velocityY = -look.y * force;
+        hitter.velocityZ = -look.z * force;
 
         if (hit != null) {
 
-            hit.velocityX = look.x;
-            hit.velocityY = look.y;
-            hit.velocityZ = look.z;
+            hit.velocityX = look.x * force;
+            hit.velocityY = look.y * force;
+            hit.velocityZ = look.z * force;
         }
     }
 }

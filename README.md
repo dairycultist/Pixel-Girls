@@ -8,7 +8,8 @@ added
 
 planned
 
-- guns
+- bouncy ball
+- guns?
 - couch?
 - stone bricks?
 - music disc(s)
