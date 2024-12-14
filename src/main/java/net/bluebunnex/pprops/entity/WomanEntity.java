@@ -8,10 +8,12 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
+    private static final int SKIN_COUNT = 2;
+
     public WomanEntity(World world) {
         super(world);
 
-        this.texture = "/assets/pprops/stationapi/textures/entity/woman1.png";
+        this.texture = "/assets/pprops/stationapi/textures/entity/woman" + ((int) (Math.random() * SKIN_COUNT) + 1) + ".png";
 
         this.maxHealth = 20;
         this.health = 20;
@@ -23,22 +25,30 @@ public class WomanEntity extends AnimalEntity {
 
         ItemStack held = player.inventory.getSelectedItem();
 
+        // TODO dialogue state machine
+        // for example, she can take a sword from you to use for fighting, say that she's hurt,
+        // thank you for the rose but say she doesn't need healing right now, etc
+
         if (this.health != this.maxHealth && held != null && held.getItem() == Block.ROSE.asItem()) {
 
             this.heal(4);
 
+            // world.playSound(this, "random.fuse", 1.0F, 1.0F);
             for (int i=0; i<5; i++) {
                 this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
             }
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
-            return true;
+            player.sendMessage("[Woman " + this.health + "/20] Thank you for the heals!");
 
         } else {
 
-            return false;
+            player.sendMessage("[Woman " + this.health + "/20] Hi sweetie!");
         }
+
+        player.swingHand();
+        return true;
     }
 
     @Override
