@@ -10,7 +10,7 @@ public class BouncyBallEntity extends Entity {
     public BouncyBallEntity(World world) {
         super(world);
 
-        this.setBoundingBoxSpacing(0.0F, 0.0F);
+        this.setBoundingBoxSpacing(0.2F, 0.2F);
     }
 
     @Override
