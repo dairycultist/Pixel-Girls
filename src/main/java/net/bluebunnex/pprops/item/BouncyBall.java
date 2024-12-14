@@ -21,7 +21,7 @@ public class BouncyBall extends TemplateItem {
         itemStack.count--;
 
         // spawn
-        BouncyBallEntity ball = new BouncyBallEntity(world);
+        BouncyBallEntity ball = new BouncyBallEntity(world, user.getLookVector());
 
         ball.setPosition(user.x, user.y, user.z);
 
