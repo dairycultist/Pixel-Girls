@@ -8,11 +8,11 @@ Adds random small stuff that I want to the game.
 
 - slime hammer (for launching yourself and others)
 - bouncy ball (planned: held item form is red ball, but actual thrown version is a random color, different textures :O)
+- women with breasts who follow you
 
 ### Planned
 
 - dynamite (throwable)
-- zombies are now women with breasts https://www.minecraftskins.com/skin/22825340/zombie-girl-mom-cute/
 - guns?
 - music disc(s)
 - cool armor
