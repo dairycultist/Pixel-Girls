@@ -6,18 +6,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class WomanEntity extends AnimalEntity {
 
-    private static final int SKIN_COUNT = 3;
+    private static final int TOTAL_TEXTURE_COUNT = 3;
+
+    private int textureVariant;
 
     public WomanEntity(World world) {
         super(world);
 
-        this.texture = "/assets/pixelgirls/stationapi/textures/entity/woman" + ((int) (Math.random() * SKIN_COUNT) + 1) + ".png";
+        textureVariant = (int) (Math.random() * TOTAL_TEXTURE_COUNT) + 1;
+        this.texture   = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
 
         this.maxHealth = 20;
-        this.health = 20;
+        this.health    = 20;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class WomanEntity extends AnimalEntity {
 
             this.heal(4);
 
-            // world.playSound(this, "random.fuse", 1.0F, 1.0F);
+            world.playSound(this, "random.fuse", 1.0F, 1.0F);
             for (int i=0; i<5; i++) {
                 this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
             }
@@ -66,12 +72,22 @@ public class WomanEntity extends AnimalEntity {
         }
     }
 
-    // todo save info about which texture we're using
-//    public void writeNbt(NbtCompound nbt) {
-//        super.writeNbt(nbt);
-//    }
-//
-//    public void readNbt(NbtCompound nbt) {
-//        super.readNbt(nbt);
-//    }
+    public void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+
+        nbt.putInt("TextureVariant", this.textureVariant);
+    }
+
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+
+        this.textureVariant = nbt.getInt("TextureVariant");
+
+        if (!nbt.contains("TextureVariant")) {
+
+            this.textureVariant = 1;
+        }
+
+        this.texture = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
+    }
 }
