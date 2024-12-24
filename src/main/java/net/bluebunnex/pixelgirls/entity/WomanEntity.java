@@ -1,19 +1,20 @@
-package net.bluebunnex.pprops.entity;
+package net.bluebunnex.pixelgirls.entity;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    private static final int SKIN_COUNT = 2;
+    private static final int SKIN_COUNT = 3;
 
     public WomanEntity(World world) {
         super(world);
 
-        this.texture = "/assets/pprops/stationapi/textures/entity/woman" + ((int) (Math.random() * SKIN_COUNT) + 1) + ".png";
+        this.texture = "/assets/pixelgirls/stationapi/textures/entity/woman" + ((int) (Math.random() * SKIN_COUNT) + 1) + ".png";
 
         this.maxHealth = 20;
         this.health = 20;
@@ -65,5 +66,12 @@ public class WomanEntity extends AnimalEntity {
         }
     }
 
-
+    // todo save info about which texture we're using
+//    public void writeNbt(NbtCompound nbt) {
+//        super.writeNbt(nbt);
+//    }
+//
+//    public void readNbt(NbtCompound nbt) {
+//        super.readNbt(nbt);
+//    }
 }

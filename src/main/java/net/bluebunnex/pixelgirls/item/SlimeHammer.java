@@ -1,4 +1,4 @@
-package net.bluebunnex.pprops.item;
+package net.bluebunnex.pixelgirls.item;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

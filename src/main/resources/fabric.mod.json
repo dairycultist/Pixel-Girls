@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "pprops",
+  "id": "pixelgirls",
   "version": "${version}",
-  "name": "Popuko's Props",
+  "name": "Pixel Girls (Girlfriend Mod)",
   "description": "",
   "authors": [ "BlueBunnex" ],
   "license": "MIT",
-  "icon": "assets/pprops/icon.png",
+  "icon": "assets/pixelgirls/icon.png",
   "environment": "*",
   "entrypoints": {
-    "stationapi:event_bus": [ "net.bluebunnex.pprops.Main" ],
+    "stationapi:event_bus": [ "net.bluebunnex.pixelgirls.PixelGirls" ],
     "stationapi:event_bus_client": [],
     "stationapi:event_bus_server": []
   },
