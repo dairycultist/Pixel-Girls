@@ -10,13 +10,17 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    // might change this to "VillagerEntity" and have some men (to make the women prettier by comparison) we'll see
-    // then we'll also have to save their gender :O
-
-    private static final int TOTAL_TEXTURE_COUNT = 3;
-    // randomly generate a name for each woman, which renders above their head?
+    private static final int TOTAL_TEXTURE_COUNT = 4;
+    private static final String[] POSSIBLE_NAMES = {
+        "Olivia", "Emma", "Ava", "Sophia", "Isabella", "Mia", "Amelia", "Harper", "Evelyn", "Abigail", "Ella", "Chloe",
+        "Grace", "Lily", "Aria", "Zoe", "Nora", "Riley", "Scarlett", "Layla", "Camila", "Mila", "Avery", "Ellie",
+        "Luna", "Samantha", "Hannah", "Hazel", "Victoria", "Nova", "Leah", "Addison", "Stella", "Natalie", "Zoey",
+        "Brooklyn", "Bella", "Ariana", "Lillian", "Lucy", "Paisley", "Audrey", "Claire", "Skylar", "Sadie", "Alice",
+        "Katherine", "Caroline", "Genesis", "Everly", "Eva", "Emery"
+    };
 
     private int textureVariant;
+    private String name = "Jamantha";
 
     public WomanEntity(World world) {
         super(world);
@@ -67,7 +71,7 @@ public class WomanEntity extends AnimalEntity {
             response = "Hi sweetie.";
         }
 
-        player.sendMessage("[Woman " + this.health + "/20] " + response);
+        player.sendMessage("[" + this.name + " " + this.health + "/20] " + response);
 
         player.swingHand();
         return true;

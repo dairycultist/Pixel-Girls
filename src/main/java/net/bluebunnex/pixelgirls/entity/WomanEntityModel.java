@@ -10,11 +10,11 @@ public class WomanEntityModel extends BipedEntityModel {
     public WomanEntityModel() {
         super();
 
-        this.breasts = new ModelPart(16, 17);
-        this.breasts.addCuboid(0f, 0f, 0f, 8, 4, 4);
-        this.breasts.setPivot(-4f, 1f, -2f);
+        this.breasts = new ModelPart(16, 21); // best uv for boobs, though skin still needs to be tailored to work well
+        this.breasts.addCuboid(0f, 0f, -4f, 8, 4, 4); // position relative to pivot
+        this.breasts.setPivot(-4f, 1f, -2f); // pivot (global space)
 
-        this.breasts.pitch = (float) -(Math.PI / 4);
+        this.breasts.pitch = (float) (Math.PI / 4);
     }
 
     @Override
