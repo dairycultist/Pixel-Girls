@@ -7,14 +7,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class WomanEntity extends AnimalEntity {
 
+    // might change this to "VillagerEntity" and have some men (to make the women prettier by comparison) we'll see
+    // then we'll also have to save their gender :O
+
     private static final int TOTAL_TEXTURE_COUNT = 3;
-    // TODO randomly generate a name for each woman, which renders above their head
+    // randomly generate a name for each woman, which renders above their head?
 
     private int textureVariant;
 
@@ -37,8 +37,7 @@ public class WomanEntity extends AnimalEntity {
 
         String response;
 
-        // dialogue state machine
-        // TODO take a sword from you to use for fighting
+        // TODO improve dialogue state machine
         if (heldItem == Block.ROSE.asItem()) {
 
             if (this.health != this.maxHealth) {
@@ -80,13 +79,18 @@ public class WomanEntity extends AnimalEntity {
 
         PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
 
-        // chase nearby player until within 5 blocks
-        // TODO chase behaviour is overridden when a bed is nearby, following that instead. this is reflected
-        // in their dialogue (this lets you make towns)
-        if (player != null && this.canSee(player) && this.getDistance(player) > 5) {
-            this.setTarget(player);
-        } else {
-            this.setTarget(null);
+        if (player != null && this.canSee(player)) {
+
+            ItemStack heldStack = player.inventory.getSelectedItem();
+            Item heldItem = heldStack != null ? heldStack.getItem() : null;
+
+            // chase nearby player if they're holding a rose
+            // AND if they're not too close (so we don't push them)
+            if (heldItem == Block.ROSE.asItem() && this.getDistance(player) > 5) {
+                this.setTarget(player);
+            } else {
+                this.setTarget(null);
+            }
         }
     }
 

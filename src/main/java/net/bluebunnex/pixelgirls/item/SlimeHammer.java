@@ -63,7 +63,7 @@ public class SlimeHammer extends TemplateItem {
         if (hit != null) {
 
             hit.velocityX = look.x * force;
-            hit.velocityY = look.y * force;
+            hit.velocityY = (look.y + 0.4) * force; // launch hit up a bit since it's more fun
             hit.velocityZ = look.z * force;
         }
     }
