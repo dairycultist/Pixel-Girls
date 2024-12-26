@@ -10,6 +10,7 @@ import net.modificationstation.stationapi.api.client.event.render.entity.EntityR
 import net.modificationstation.stationapi.api.event.entity.EntityRegister;
 import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.template.item.TemplateItem;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;
 
@@ -18,12 +19,18 @@ public class PixelGirls {
     @Entrypoint.Namespace
     public static final Namespace NAMESPACE = Null.get();
 
+    public static Item weddingRing;
     public static Item slimeHammer;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
 
-        slimeHammer = new SlimeHammer(NAMESPACE.id("slime_hammer")).setTranslationKey(NAMESPACE, "slime_hammer");
+        weddingRing = new TemplateItem(NAMESPACE.id("wedding_ring"))
+                .setMaxCount(1)
+                .setTranslationKey(NAMESPACE, "wedding_ring");
+
+        slimeHammer = new SlimeHammer(NAMESPACE.id("slime_hammer"))
+                .setTranslationKey(NAMESPACE, "slime_hammer");
     }
 
     @EventListener

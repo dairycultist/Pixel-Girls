@@ -1,5 +1,6 @@
 package net.bluebunnex.pixelgirls.entity;
 
+import net.bluebunnex.pixelgirls.PixelGirls;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,6 +22,7 @@ public class WomanEntity extends AnimalEntity {
 
     private int textureVariant;
     private String name;
+    private String marriedTo;
 
     public WomanEntity(World world) {
         super(world);
@@ -29,6 +31,8 @@ public class WomanEntity extends AnimalEntity {
         this.texture   = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
 
         this.name = POSSIBLE_NAMES[(int) (Math.random() * POSSIBLE_NAMES.length)];
+
+        this.marriedTo = null;
 
         this.maxHealth = 20;
         this.health    = 20;
@@ -41,43 +45,42 @@ public class WomanEntity extends AnimalEntity {
         ItemStack heldStack = player.inventory.getSelectedItem();
         Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-        String response;
+        if (heldItem == Block.ROSE.asItem() && this.health != this.maxHealth) {
 
-        // TODO improve dialogue state machine
-        if (heldItem == Block.ROSE.asItem()) {
+            this.heal(4);
 
-            if (this.health != this.maxHealth) {
+            //world.playSound(this, "pixelgirls:entity.woman.giggle", 1.0F, 1.0F);
+            for (int i = 0; i < 5; i++) {
+                this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+            }
 
-                this.heal(4);
+            player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
-                //world.playSound(this, "pixelgirls:entity.woman.hurt", 1.0F, 1.0F);
-                for (int i = 0; i < 5; i++) {
-                    this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-                }
+        } else if (heldItem == PixelGirls.weddingRing) {
 
+            if (this.marriedTo == null) {
+
+                player.sendMessage("\"I do!\"");
+
+                this.marriedTo = player.name;
                 player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
-                response = "Thank you for the rose, I'm feeling better already!";
+            } else if (this.marriedTo.equals(player.name)) {
+
+                player.sendMessage("\"We're already married!\"");
 
             } else {
 
-                response = "I appreciate the sentiment, but I'm in tip top shape already.";
+                player.sendMessage("\"I'm flattered, but I'm already taken.\"");
             }
-
-        } else if (this.health < 10) {
-
-            response = "I'm not feeling too hot, do you have a rose?";
 
         } else {
 
-            int random = (int) (Math.random() * 3);
-
-            response = random == 0 ? "What's up?"
-                     : random == 1 ? "Hi sweetie."
-                     : "Hello!";
+            player.sendMessage(
+                    this.name + " (" + this.health
+                    + (this.marriedTo == null ? "/20) Not married." : "/20] Married to " + this.marriedTo + ".")
+            );
         }
-
-        player.sendMessage("[" + this.name + " " + this.health + "/20] " + response);
 
         player.swingHand();
         return true;
@@ -110,6 +113,9 @@ public class WomanEntity extends AnimalEntity {
 
         nbt.putInt("TextureVariant", this.textureVariant);
         nbt.putString("Name", this.name);
+
+        if (this.marriedTo != null)
+            nbt.putString("MarriedTo", this.marriedTo);
     }
 
     @Override
@@ -129,6 +135,12 @@ public class WomanEntity extends AnimalEntity {
 
         if (!nbt.contains("Name"))
             this.name = "Hazalelponea";
+
+        // load married to
+        this.marriedTo = nbt.getString("MarriedTo");
+
+        if (!nbt.contains("MarriedTo"))
+            this.marriedTo = null;
     }
 
     @Override
