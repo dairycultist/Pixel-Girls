@@ -20,13 +20,15 @@ public class WomanEntity extends AnimalEntity {
     };
 
     private int textureVariant;
-    private String name = "Jamantha";
+    private String name;
 
     public WomanEntity(World world) {
         super(world);
 
-        textureVariant = (int) (Math.random() * TOTAL_TEXTURE_COUNT) + 1;
+        this.textureVariant = (int) (Math.random() * TOTAL_TEXTURE_COUNT) + 1;
         this.texture   = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
+
+        this.name = POSSIBLE_NAMES[(int) (Math.random() * POSSIBLE_NAMES.length)];
 
         this.maxHealth = 20;
         this.health    = 20;
@@ -48,7 +50,7 @@ public class WomanEntity extends AnimalEntity {
 
                 this.heal(4);
 
-                world.playSound(this, "random.fuse", 1.0F, 1.0F);
+                //world.playSound(this, "pixelgirls:entity.woman.hurt", 1.0F, 1.0F);
                 for (int i = 0; i < 5; i++) {
                     this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
                 }
@@ -59,16 +61,20 @@ public class WomanEntity extends AnimalEntity {
 
             } else {
 
-                response = "I appreciate the sentiment sweetie, but I'm in tip top shape already.";
+                response = "I appreciate the sentiment, but I'm in tip top shape already.";
             }
 
         } else if (this.health < 10) {
 
-            response = "I'm not feeling too hot sweetie, do you have a rose?";
+            response = "I'm not feeling too hot, do you have a rose?";
 
         } else {
 
-            response = "Hi sweetie.";
+            int random = (int) (Math.random() * 3);
+
+            response = random == 0 ? "What's up?"
+                     : random == 1 ? "Hi sweetie."
+                     : "Hello!";
         }
 
         player.sendMessage("[" + this.name + " " + this.health + "/20] " + response);
@@ -98,22 +104,45 @@ public class WomanEntity extends AnimalEntity {
         }
     }
 
+    @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
         nbt.putInt("TextureVariant", this.textureVariant);
+        nbt.putString("Name", this.name);
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
 
+        // load texture
         this.textureVariant = nbt.getInt("TextureVariant");
 
-        if (!nbt.contains("TextureVariant")) {
-
+        if (!nbt.contains("TextureVariant"))
             this.textureVariant = 1;
-        }
 
         this.texture = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
+
+        // load name
+        this.name = nbt.getString("Name");
+
+        if (!nbt.contains("Name"))
+            this.name = "Hazalelponea";
+    }
+
+    @Override
+    protected String getRandomSound() {
+        return null;
+    }
+
+    @Override
+    protected String getHurtSound() {
+        return "pixelgirls:entity.woman.hurt";
+    }
+
+    @Override
+    protected String getDeathSound() {
+        return "pixelgirls:entity.woman.hurt";
     }
 }
