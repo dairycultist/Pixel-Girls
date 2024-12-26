@@ -78,7 +78,7 @@ public class WomanEntity extends AnimalEntity {
 
             player.sendMessage(
                     this.name + " (" + this.health
-                    + (this.marriedTo == null ? "/20) Not married." : "/20] Married to " + this.marriedTo + ".")
+                    + (this.marriedTo == null ? "/20) Not married." : "/20) Married to " + this.marriedTo + ".")
             );
         }
 
@@ -97,9 +97,12 @@ public class WomanEntity extends AnimalEntity {
             ItemStack heldStack = player.inventory.getSelectedItem();
             Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-            // chase nearby player if they're holding a rose
+            // chase nearby player if they're holding a rose OR we're married to them
             // AND if they're not too close (so we don't push them)
-            if (heldItem == Block.ROSE.asItem() && this.getDistance(player) > 5) {
+            if (
+                    (heldItem == Block.ROSE.asItem() || (this.marriedTo != null && this.marriedTo.equals(player.name)))
+                    && this.getDistance(player) > 5
+            ) {
                 this.setTarget(player);
             } else {
                 this.setTarget(null);
