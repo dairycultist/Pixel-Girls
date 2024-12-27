@@ -2,7 +2,6 @@ package net.bluebunnex.pixelgirls;
 
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.bluebunnex.pixelgirls.entity.WomanEntityModel;
-import net.bluebunnex.pixelgirls.item.SlimeHammer;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.item.Item;
@@ -20,7 +19,6 @@ public class PixelGirls {
     public static final Namespace NAMESPACE = Null.get();
 
     public static Item weddingRing;
-    public static Item slimeHammer;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
@@ -28,9 +26,6 @@ public class PixelGirls {
         weddingRing = new TemplateItem(NAMESPACE.id("wedding_ring"))
                 .setMaxCount(1)
                 .setTranslationKey(NAMESPACE, "wedding_ring");
-
-        slimeHammer = new SlimeHammer(NAMESPACE.id("slime_hammer"))
-                .setTranslationKey(NAMESPACE, "slime_hammer");
     }
 
     @EventListener
