@@ -26,17 +26,17 @@ public class InGameHudMixin {
 
         // TODO when hovering over any woman, it shows their name + "(unmarried)" and their health bar (red pixel thin bar)
 
-        ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
-        int x = scaler.getScaledWidth() / 2 + 4;
-        int y = scaler.getScaledHeight() / 2 - 4;
-
-        HitResult hit = this.minecraft.player.raycast(3, 0.1f);
-
-        if (hit != null)
-            System.out.println(hit.entity);
-
-        TextRenderer textRenderer = this.minecraft.textRenderer;
-
-        textRenderer.drawWithShadow("Jenny", x, y, -1);
+//        ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
+//        int x = scaler.getScaledWidth() / 2 + 4;
+//        int y = scaler.getScaledHeight() / 2 - 4;
+//
+//        HitResult hit = this.minecraft.player.raycast(3, 0.1f);
+//
+//        if (hit != null)
+//            System.out.println(hit.entity);
+//
+//        TextRenderer textRenderer = this.minecraft.textRenderer;
+//
+//        textRenderer.drawWithShadow("Jenny", x, y, -1);
     }
 }

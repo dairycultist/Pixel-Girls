@@ -32,6 +32,18 @@ public class WomanEntity extends AnimalEntity {
 
         this.name = POSSIBLE_NAMES[(int) (Math.random() * POSSIBLE_NAMES.length)];
 
+        // easter egg skin + name combos
+        switch ((int) (Math.random() * 10)) {
+            case 0:
+                this.texture = "/assets/pixelgirls/stationapi/textures/entity/mita.png"; // TODO clean up mita skin
+                this.name = "Mita";
+                break;
+            case 1:
+                this.texture = "/assets/pixelgirls/stationapi/textures/entity/jenny.png";
+                this.name = "Jenny";
+                break;
+        }
+
         this.marriedTo = null;
 
         this.maxHealth = 20;
