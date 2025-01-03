@@ -2,6 +2,7 @@ package net.bluebunnex.pixelgirls.entity;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.util.math.MathHelper;
 
 public class WomanEntityModel extends BipedEntityModel {
 
@@ -22,5 +23,13 @@ public class WomanEntityModel extends BipedEntityModel {
         super.render(limbAngle, limbDistance, animationProgress, headYaw, headPitch, scale);
 
         this.breasts.render(scale);
+    }
+
+    // TODO cute anime girl swaying idle animation
+    @Override
+    public void setAngles(float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, float scale) {
+
+        // find out what these parameters do by setting them to zero
+        super.setAngles(limbAngle, limbDistance, animationProgress, headYaw, headPitch, scale);
     }
 }

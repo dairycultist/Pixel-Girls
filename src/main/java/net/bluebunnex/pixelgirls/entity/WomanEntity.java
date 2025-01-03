@@ -76,6 +76,7 @@ public class WomanEntity extends AnimalEntity {
 
         } else {
 
+            // TODO temporary, replace with dialogue state machine or something
             player.sendMessage(
                     this.name + " (" + this.health
                     + (this.marriedTo == null ? "/20) Not married." : "/20) Married to " + this.marriedTo + ".")
@@ -89,6 +90,8 @@ public class WomanEntity extends AnimalEntity {
     @Override
     public void tick() {
         super.tick();
+
+        // TODO wife AI: follow you and look at you and if you stand too close to her she'll blush
 
         PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
 

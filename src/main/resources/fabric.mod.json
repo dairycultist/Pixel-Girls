@@ -13,7 +13,7 @@
     "stationapi:event_bus_client": [],
     "stationapi:event_bus_server": []
   },
-  "mixins": [],
+  "mixins": [ "pixelgirls.mixins.json" ],
   "depends": {
     "minecraft": "1.0.0-beta.7.3"
   }
