@@ -20,29 +20,29 @@ public class WomanEntity extends AnimalEntity {
         "Katherine", "Caroline", "Genesis", "Everly", "Eva", "Emery"
     };
 
-    private int textureVariant;
+    private String textureName;
     private String name;
     private String marriedTo;
 
     public WomanEntity(World world) {
         super(world);
 
-        this.textureVariant = (int) (Math.random() * TOTAL_TEXTURE_COUNT) + 1;
-        this.texture   = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
-
-        this.name = POSSIBLE_NAMES[(int) (Math.random() * POSSIBLE_NAMES.length)];
+        this.textureName = "woman" + ((int) (Math.random() * TOTAL_TEXTURE_COUNT) + 1) + ".png";
+        this.name        = POSSIBLE_NAMES[(int) (Math.random() * POSSIBLE_NAMES.length)];
 
         // easter egg skin + name combos
         switch ((int) (Math.random() * 10)) {
             case 0:
-                this.texture = "/assets/pixelgirls/stationapi/textures/entity/mita.png"; // TODO clean up mita skin
+                this.textureName = "mita.png";
                 this.name = "Mita";
                 break;
             case 1:
-                this.texture = "/assets/pixelgirls/stationapi/textures/entity/jenny.png";
+                this.textureName = "jenny.png";
                 this.name = "Jenny";
                 break;
         }
+
+        this.texture   = "/assets/pixelgirls/stationapi/textures/entity/" + this.textureName;
 
         this.marriedTo = null;
 
@@ -132,7 +132,7 @@ public class WomanEntity extends AnimalEntity {
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
-        nbt.putInt("TextureVariant", this.textureVariant);
+        nbt.putString("TextureName", this.textureName);
         nbt.putString("Name", this.name);
 
         if (this.marriedTo != null)
@@ -144,12 +144,12 @@ public class WomanEntity extends AnimalEntity {
         super.readNbt(nbt);
 
         // load texture
-        this.textureVariant = nbt.getInt("TextureVariant");
+        this.textureName = nbt.getString("TextureName");
 
-        if (!nbt.contains("TextureVariant"))
-            this.textureVariant = 1;
+        if (!nbt.contains("TextureName"))
+            this.textureName = "woman1.png";
 
-        this.texture = "/assets/pixelgirls/stationapi/textures/entity/woman" + textureVariant + ".png";
+        this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.textureName;
 
         // load name
         this.name = nbt.getString("Name");
