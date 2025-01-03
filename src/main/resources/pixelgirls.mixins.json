@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "net.bluebunnex.pixelgirls.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "BiomeMixin"
+  ],
   "server": [],
   "client": [
     "InGameHudMixin"

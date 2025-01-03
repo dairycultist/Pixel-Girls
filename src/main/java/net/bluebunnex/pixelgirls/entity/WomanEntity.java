@@ -103,9 +103,7 @@ public class WomanEntity extends AnimalEntity {
     public void tick() {
         super.tick();
 
-        // wife AI: follows you and looks at you
-        // sometimes she tries to press against you which I might want to fix
-        // maybe? if you stand too close to her she'll blush
+        // wife AI: follows you and looks at you, and maybe if you stand too close to her she'll blush?
 
         PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
 
@@ -119,11 +117,21 @@ public class WomanEntity extends AnimalEntity {
             if (heldItem == Block.ROSE.asItem() || player.name.equals(this.marriedTo)) {
 
                 if (this.getDistance(player) > 5) {
+
                     this.setTarget(player); // by default, we look at our target
                 } else {
+
+                    // TODO bug: she walks towards you even when near, what's happening
+                    // is she's just wandering, but since she's looking at you she has
+                    // no choice but to walk towards you, so we need to stop her from
+                    // moving entirely if she's nearby, so look in super.tick();
+
                     this.setTarget(null);
-                    this.lookAt(player, 45f, 30f);
+                    //this.lookAt(player, 45f, 30f);
                 }
+            } else {
+
+                this.setTarget(null);
             }
 
         } else {
