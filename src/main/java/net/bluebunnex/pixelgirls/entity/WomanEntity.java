@@ -103,7 +103,9 @@ public class WomanEntity extends AnimalEntity {
     public void tick() {
         super.tick();
 
-        // TODO wife AI: follow you and look at you and if you stand too close to her she'll blush
+        // wife AI: follows you and looks at you
+        // sometimes she tries to press against you which I might want to fix
+        // maybe? if you stand too close to her she'll blush
 
         PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
 
@@ -112,15 +114,16 @@ public class WomanEntity extends AnimalEntity {
             ItemStack heldStack = player.inventory.getSelectedItem();
             Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-            // chase nearby player if they're holding a rose OR we're married to them
-            // AND if they're not too close (so we don't push them)
-            if (
-                    (heldItem == Block.ROSE.asItem() || (this.marriedTo != null && this.marriedTo.equals(player.name)))
-                    && this.getDistance(player) > 5
-            ) {
-                this.setTarget(player);
-            } else {
-                this.setTarget(null);
+            // follow nearby player if they're holding a rose OR we're married to them
+            // but don't get too close so we don't push them
+            if (heldItem == Block.ROSE.asItem() || player.name.equals(this.marriedTo)) {
+
+                if (this.getDistance(player) > 5) {
+                    this.setTarget(player); // by default, we look at our target
+                } else {
+                    this.setTarget(null);
+                    this.lookAt(player, 45f, 30f);
+                }
             }
         }
     }
