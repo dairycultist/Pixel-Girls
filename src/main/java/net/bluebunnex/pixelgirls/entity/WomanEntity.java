@@ -125,6 +125,10 @@ public class WomanEntity extends AnimalEntity {
                     this.lookAt(player, 45f, 30f);
                 }
             }
+
+        } else {
+
+            this.setTarget(null);
         }
     }
 
@@ -144,24 +148,18 @@ public class WomanEntity extends AnimalEntity {
         super.readNbt(nbt);
 
         // load texture
-        this.textureName = nbt.getString("TextureName");
-
-        if (!nbt.contains("TextureName"))
-            this.textureName = "woman1.png";
-
-        this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.textureName;
+        if (nbt.contains("TextureName")) {
+            this.textureName = nbt.getString("TextureName");
+            this.texture     = "/assets/pixelgirls/stationapi/textures/entity/" + this.textureName;
+        }
 
         // load name
-        this.name = nbt.getString("Name");
-
-        if (!nbt.contains("Name"))
-            this.name = "Hazalelponea";
+        if (nbt.contains("Name"))
+            this.name = nbt.getString("Name");
 
         // load married to
-        this.marriedTo = nbt.getString("MarriedTo");
-
-        if (!nbt.contains("MarriedTo"))
-            this.marriedTo = null;
+        if (nbt.contains("MarriedTo"))
+            this.marriedTo = nbt.getString("MarriedTo");
     }
 
     @Override

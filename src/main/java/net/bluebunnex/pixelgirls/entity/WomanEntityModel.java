@@ -89,8 +89,8 @@ public class WomanEntityModel extends BipedEntityModel {
         }
 
         // cute anime girl swaying idle animation component
-        this.rightArm.roll += MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F;
-        this.leftArm.roll -= MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F;
-        this.head.roll = MathHelper.sin(animationProgress * 0.15F) * 0.1F;
+        this.rightArm.roll += (MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F) / (limbDistance + 1);
+        this.leftArm.roll -= (MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F) / (limbDistance + 1);
+        this.head.roll = (MathHelper.sin(animationProgress * 0.15F) * 0.1F) / (limbDistance * 4 + 1);
     }
 }
