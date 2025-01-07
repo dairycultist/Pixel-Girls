@@ -75,7 +75,7 @@ public class WomanEntity extends AnimalEntity {
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
-        } else if (heldItem == PixelGirls.weddingRing) {
+        } else if (heldItem == PixelGirls.WEDDING_RING) {
 
             if (this.marriedTo == null) {
 

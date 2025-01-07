@@ -18,12 +18,12 @@ public class PixelGirls {
     @Entrypoint.Namespace
     public static final Namespace NAMESPACE = Null.get();
 
-    public static Item weddingRing;
+    public static Item WEDDING_RING;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
 
-        weddingRing = new TemplateItem(NAMESPACE.id("wedding_ring"))
+        WEDDING_RING = new TemplateItem(NAMESPACE.id("wedding_ring"))
                 .setMaxCount(1)
                 .setTranslationKey(NAMESPACE, "wedding_ring");
     }

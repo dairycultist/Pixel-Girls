@@ -39,7 +39,7 @@ public class InGameHudMixin {
 
             TextRenderer textRenderer = this.minecraft.textRenderer;
 
-            textRenderer.drawWithShadow(woman.name + (woman.marriedTo == null ? " (unmarried)" : " married to " + woman.marriedTo), x, y, -1);
+            textRenderer.drawWithShadow(woman.name + (woman.marriedTo == null ? " (unmarried)" : " (married to " + woman.marriedTo + ")"), x, y, -1);
             textRenderer.drawWithShadow(woman.health + "/20", x, y + 10, -2236963);
         }
     }
