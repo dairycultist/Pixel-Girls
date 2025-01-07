@@ -20,9 +20,9 @@ public class WomanEntity extends AnimalEntity {
         "Katherine", "Caroline", "Genesis", "Everly", "Eva", "Emery"
     };
 
-    private String textureName;
-    private String name;
-    private String marriedTo;
+    public String textureName;
+    public String name;
+    public String marriedTo;
 
     public WomanEntity(World world) {
         super(world);
@@ -88,11 +88,8 @@ public class WomanEntity extends AnimalEntity {
 
         } else {
 
-            // TODO temporary, replace with dialogue state machine or something
-            player.sendMessage(
-                    this.name + " (" + this.health
-                    + (this.marriedTo == null ? "/20) Not married." : "/20) Married to " + this.marriedTo + ".")
-            );
+            // TODO dialogue state machine
+            player.sendMessage("\"Hi!\"");
         }
 
         player.swingHand();
