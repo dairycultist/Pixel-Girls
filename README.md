@@ -2,14 +2,13 @@
 
 - women with breasts
   - follow you when you're holding a rose OR if they're married to you
-  - can be healed with roses
+  - can be healed with food
   - custom sounds
+  - talk to you (kinda)
+  - can be married with a wedding ring (1 diamond at the top + 7 gold everywhere else but the center)
 - wedding ring
 - slime hammer (for launching yourself and others)
-
-soon: women will naturally spawn
-
-also soon: wedding ring will be craftable with gold and diamond
+- women spawn naturally
 
 ### Thanks to
 - [This women for making pain sounds and posting them online](https://freesound.org/people/MadamVicious/sounds/218190/)
