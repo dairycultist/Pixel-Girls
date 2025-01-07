@@ -113,19 +113,11 @@ public class WomanEntity extends AnimalEntity {
             // but don't get too close so we don't push them
             if (heldItem == Block.ROSE.asItem() || player.name.equals(this.marriedTo)) {
 
-                if (this.getDistance(player) > 5) {
+                this.setTarget(player);
 
-                    this.setTarget(player); // by default, we look at our target
-                } else {
+                if (this.isImmobile())
+                    this.lookAt(player, 45f, 30f);
 
-                    // TODO bug: she walks towards you even when near, what's happening
-                    // is she's just wandering, but since she's looking at you she has
-                    // no choice but to walk towards you, so we need to stop her from
-                    // moving entirely if she's nearby, so look in super.tick();
-
-                    this.setTarget(null);
-                    //this.lookAt(player, 45f, 30f);
-                }
             } else {
 
                 this.setTarget(null);
@@ -135,6 +127,15 @@ public class WomanEntity extends AnimalEntity {
 
             this.setTarget(null);
         }
+    }
+
+    @Override
+    public boolean isImmobile() {
+
+        if (this.getTarget() == null)
+            return false;
+
+        return this.getDistance(this.getTarget()) < 5;
     }
 
     @Override
