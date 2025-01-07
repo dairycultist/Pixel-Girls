@@ -4,6 +4,7 @@ import net.bluebunnex.pixelgirls.PixelGirls;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FoodItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -57,9 +58,15 @@ public class WomanEntity extends AnimalEntity {
         ItemStack heldStack = player.inventory.getSelectedItem();
         Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-        if (heldItem == Block.ROSE.asItem() && this.health != this.maxHealth) {
+        if (heldItem instanceof FoodItem && this.health != this.maxHealth) {
 
-            this.heal(4);
+            if (Math.random() > 0.5) {
+                player.sendMessage("\"Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!\"");
+            } else {
+                player.sendMessage("\"That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!\"");
+            }
+
+            this.heal(((FoodItem) heldItem).getHealthRestored());
 
             //world.playSound(this, "pixelgirls:entity.woman.giggle", 1.0F, 1.0F);
             for (int i = 0; i < 5; i++) {
@@ -135,6 +142,7 @@ public class WomanEntity extends AnimalEntity {
         if (this.getTarget() == null)
             return false;
 
+        // don't move when closer than 5 blocks to target player so we don't press into them
         return this.getDistance(this.getTarget()) < 5;
     }
 

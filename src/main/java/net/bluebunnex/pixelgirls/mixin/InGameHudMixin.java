@@ -3,12 +3,10 @@ package net.bluebunnex.pixelgirls.mixin;
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.ScreenScaler;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.hit.HitResultType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,8 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 @Environment(EnvType.CLIENT)
 public class InGameHudMixin {
-
-    // TODO add ring crafting recipe (7 gold 1 diamond) and better texture then release
 
     @Shadow
     private Minecraft minecraft;
