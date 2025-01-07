@@ -116,7 +116,7 @@ public class WomanEntity extends AnimalEntity {
                 this.setTarget(player);
 
                 if (this.isImmobile())
-                    this.lookAt(player, 45f, 30f);
+                    this.lookAt(player, 45f, 999f); // pitch and yaw are backwards
 
             } else {
 
