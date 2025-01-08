@@ -43,7 +43,7 @@ public class InGameHudMixin {
 
             TextRenderer textRenderer = this.minecraft.textRenderer;
 
-            // box behind text to make it easier to read
+            // box behind text to make it easier to read (stolen from DrawContext)
             {
                 GL11.glPushMatrix();
 

@@ -37,6 +37,6 @@ public class PixelGirls {
     @EventListener
     public void registerEntityRenderer(EntityRendererRegisterEvent event) {
 
-        event.renderers.put(WomanEntity.class, new LivingEntityRenderer(new WomanEntityModel(), 1));
+        event.renderers.put(WomanEntity.class, new LivingEntityRenderer(new WomanEntityModel(), 0.5f));
     }
 }
