@@ -14,8 +14,6 @@ public class WomanEntityModel extends BipedEntityModel {
         this.breasts = new ModelPart(40, 0);
         this.breasts.addCuboid(0f, 0f, -4f, 8, 4, 4); // position relative to pivot
         this.breasts.setPivot(-4f, 1f, -2f); // pivot (global space)
-
-        this.breasts.pitch = (float) (Math.PI / 8);
     }
 
     // override cuz we don't want to render the hat
@@ -48,6 +46,8 @@ public class WomanEntityModel extends BipedEntityModel {
         this.leftLeg.pitch = MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
         this.rightLeg.yaw = 0.0F;
         this.leftLeg.yaw = 0.0F;
+        this.breasts.pitch = (float) (Math.PI / 8);
+
         ModelPart var10000;
         if (this.riding) {
             var10000 = this.rightArm;
@@ -97,10 +97,24 @@ public class WomanEntityModel extends BipedEntityModel {
         }
 
         // cute anime girl swaying idle animation component
-        float moveFac = limbDistance * 4 + 1;
+        final float moveFac = limbDistance * 8 + 1;
+        final float sin = MathHelper.sin(animationProgress * 0.2f);
 
-        this.rightArm.roll += (MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F) / moveFac;
-        this.leftArm.roll -= (MathHelper.cos(animationProgress * 0.3F) * 0.15F + 0.15F) / moveFac;
-        this.head.roll = (MathHelper.sin(animationProgress * 0.15F) * 0.1F) / moveFac;
+        this.rightArm.pitch -= (sin * 0.2F) / moveFac;
+        this.leftArm.pitch  -= (sin * 0.2F) / moveFac;
+        this.rightArm.pivotZ = -(sin * 0.44F) / moveFac;
+        this.leftArm.pivotZ  = -(sin * 0.44F) / moveFac;
+
+        this.rightLeg.pitch -= (sin * 0.1F) / moveFac;
+        this.leftLeg.pitch  -= (sin * 0.1F) / moveFac;
+        this.rightLeg.pivotZ = (sin * 1.3F) / moveFac;
+        this.leftLeg.pivotZ  = (sin * 1.3F) / moveFac;
+
+        this.body.pitch = (sin * 0.13F) / moveFac;
+
+        this.breasts.pitch += (sin * 0.1F) / moveFac;
+        this.breasts.pivotZ = -2f + (sin * 0.44F) / moveFac;
+
+        this.head.pivotZ = -(sin * 0.44F) / moveFac;
     }
 }

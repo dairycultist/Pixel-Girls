@@ -35,14 +35,12 @@ public class InGameHudMixin {
 
             ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
             int x = scaler.getScaledWidth() / 2 + 10;
-            int y = scaler.getScaledHeight() / 2 - 3;
+            int y = scaler.getScaledHeight() / 2 - 4;
 
             String text = woman.name;
 
             TextRenderer textRenderer = this.minecraft.textRenderer;
 
-            // box behind text to make it easier to read (stolen from DrawContext)
-            // also health bar
             {
                 GL11.glPushMatrix();
 
@@ -53,6 +51,7 @@ public class InGameHudMixin {
                 GL11.glDisable(3553);
                 GL11.glBlendFunc(770, 771);
 
+                // box behind text to make it easier to read (stolen from DrawContext)
                 x1 = x - 2; x2 = x + 60;
                 y1 = y - 2; y2 = y + 12;
 
@@ -64,11 +63,12 @@ public class InGameHudMixin {
                 tessellator.vertex((double) x1, (double) y1, 0.0);
                 tessellator.draw();
 
+                // health bar
                 x1 += 1; x2 -= 1;
                 x2 -= x1;
                 x2 = x2 * woman.health / woman.maxHealth;
                 x2 += x1;
-                y1 = y + 10; y2 = y + 11;
+                y1 = y2 - 2; y2 = y2 - 1;
 
                 GL11.glColor4f(1f, 0f, 0f, 1f);
                 tessellator.startQuads();
