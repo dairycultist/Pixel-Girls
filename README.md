@@ -1,13 +1,9 @@
 # Pixel Girls (Girlfriend Mod) [StationAPI]
 
-- women with breasts
-  - follow you when you're holding a rose OR if they're married to you
-  - can be healed with food
+- women characters with breasts
   - custom sounds
-  - talk to you (kinda)
-  - can be married with a wedding ring (1 diamond at the top + 7 gold everywhere else but the center)
+  - breasts have custom texture
 - wedding ring
-- slime hammer (for launching yourself and others)
 - women spawn naturally
 
 ### Thanks to
