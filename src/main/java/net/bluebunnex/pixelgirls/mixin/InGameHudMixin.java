@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.ScreenScaler;
 import net.minecraft.util.hit.HitResultType;
 import org.lwjgl.opengl.GL11;
@@ -19,6 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 @Environment(EnvType.CLIENT)
 public class InGameHudMixin {
+
+    @Shadow
+    private static ItemRenderer ITEM_RENDERER = new ItemRenderer();
 
     @Shadow
     private Minecraft minecraft;
@@ -35,9 +39,7 @@ public class InGameHudMixin {
 
             ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
             int x = scaler.getScaledWidth() / 2 + 10;
-            int y = scaler.getScaledHeight() / 2 - 4;
-
-            String text = woman.name;
+            int y = scaler.getScaledHeight() / 2 - 12;
 
             TextRenderer textRenderer = this.minecraft.textRenderer;
 
@@ -53,7 +55,7 @@ public class InGameHudMixin {
 
                 // box behind text to make it easier to read (stolen from DrawContext)
                 x1 = x - 2; x2 = x + 60;
-                y1 = y - 2; y2 = y + 12;
+                y1 = y - 2; y2 = y + 26;
 
                 GL11.glColor4f(0f, 0f, 0.03f, 0.5f);
                 tessellator.startQuads();
@@ -68,7 +70,7 @@ public class InGameHudMixin {
                 x2 -= x1;
                 x2 = x2 * woman.health / woman.maxHealth;
                 x2 += x1;
-                y1 = y2 - 2; y2 = y2 - 1;
+                y2 = ++y1; y2++;
 
                 GL11.glColor4f(1f, 0f, 0f, 1f);
                 tessellator.startQuads();
@@ -84,7 +86,20 @@ public class InGameHudMixin {
                 GL11.glPopMatrix();
             }
 
-            textRenderer.drawWithShadow(text, x, y, -1);
+            ITEM_RENDERER.renderGuiItem(
+                    textRenderer,
+                    this.minecraft.textureManager,
+                    woman.favouriteItem.id,
+                    0,
+                    woman.favouriteItem.getTextureId(0),
+                    x + 33,
+                    y + 8
+            );
+            GL11.glDisable(2896); // renderGuiItem is destructive
+            GL11.glDisable(2884);
+
+            textRenderer.drawWithShadow(woman.name, x, y + 2, -1);
+            textRenderer.drawWithShadow("Loves:", x, y + 14, -11184811);
         }
     }
 }

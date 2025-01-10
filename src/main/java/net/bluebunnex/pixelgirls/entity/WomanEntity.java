@@ -1,5 +1,6 @@
 package net.bluebunnex.pixelgirls.entity;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodItem;
@@ -11,20 +12,32 @@ import net.minecraft.world.World;
 public class WomanEntity extends AnimalEntity {
 
     public String name;
+    public Item favouriteItem;
+    private int variant;
 
     public WomanEntity(World world) {
         super(world);
 
-        this.setName("Testgirl");
-
         this.maxHealth = 20;
         this.health    = 20;
+
+        this.setVariant(0);
     }
 
-    public void setName(String name) {
+    public void setVariant(int variant) {
 
-        this.name = name;
-        this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + name + ".png";
+        this.variant = variant;
+
+        switch (this.variant) {
+
+            default:
+            case 0:
+                this.name = "Rosa Maria";
+                this.favouriteItem = Block.ROSE.asItem();
+                break;
+        }
+
+        this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
     }
 
     @Override
@@ -34,28 +47,27 @@ public class WomanEntity extends AnimalEntity {
         ItemStack heldStack = player.inventory.getSelectedItem();
         Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-        if (heldItem instanceof FoodItem) {
+        if (heldItem == favouriteItem) {
 
-            if (this.health != this.maxHealth) {
+            player.sendMessage("Aww! How'd you know " + heldItem.getTranslatedName().toLowerCase() + "s are my favourite?");
 
-                if (Math.random() > 0.5) {
-                    player.sendMessage("\"Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!\"");
-                } else {
-                    player.sendMessage("\"That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!\"");
-                }
+            player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
-                this.heal(((FoodItem) heldItem).getHealthRestored());
+        } else if (heldItem instanceof FoodItem) {
 
-                for (int i = 0; i < 5; i++) {
-                    this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-                }
-
-                player.inventory.removeStack(player.inventory.selectedSlot, 1);
-
+            if (Math.random() > 0.5) {
+                player.sendMessage("\"Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!\"");
             } else {
-
-                player.sendMessage("I'm not hungry right now, thank you though!");
+                player.sendMessage("\"That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!\"");
             }
+
+            this.heal(((FoodItem) heldItem).getHealthRestored());
+
+            for (int i = 0; i < 5; i++) {
+                this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+            }
+
+            player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
         } else {
 
@@ -101,15 +113,15 @@ public class WomanEntity extends AnimalEntity {
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
-        nbt.putString("Name", this.name);
+        nbt.putInt("Variant", this.variant);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
 
-        if (nbt.contains("Name"))
-            this.setName(nbt.getString("Name"));
+        if (nbt.contains("Variant"))
+            this.setVariant(nbt.getInt("Variant"));
     }
 
     @Override

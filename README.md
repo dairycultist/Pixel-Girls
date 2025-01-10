@@ -3,6 +3,7 @@
 - women characters with breasts
   - custom sounds
   - breasts have custom texture
+  - badass girls will spawn in the nether
 - wedding ring
 - women spawn naturally
 
