@@ -12,28 +12,46 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerEntityMixin implements DialogueContainer {
 
     @Unique
+    private String activeSpeakerName;
+
+    @Unique
     private String activeDialogue;
 
     @Unique
     private int messageTimeLeft;
 
     @Unique
-    public void setDialogue(String dialogue) {
+    public void pixel_girls$pushDialogue(String speakerName, String dialogue) {
 
+        this.activeSpeakerName = speakerName;
         this.activeDialogue = dialogue;
-        this.messageTimeLeft = Math.min((int) Math.sqrt(dialogue.length()) * 15, 90);
+        this.messageTimeLeft = 72;
     }
 
     @Override
-    public String getDialogue() {
+    public boolean pixel_girls$hasDialogue() {
+        return activeDialogue != null;
+    }
 
+    @Unique
+    @Override
+    public String pixel_girls$getDialogue() {
         return activeDialogue;
+    }
+
+    @Unique
+    @Override
+    public String pixel_girls$getSpeakerName() {
+        return activeSpeakerName;
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void fadeDialogue(CallbackInfo ci) {
 
-        if (activeDialogue != null && messageTimeLeft-- <= 0)
+        if (activeDialogue != null && messageTimeLeft-- <= 0) {
+
             activeDialogue = null;
+            activeSpeakerName = null;
+        }
     }
 }

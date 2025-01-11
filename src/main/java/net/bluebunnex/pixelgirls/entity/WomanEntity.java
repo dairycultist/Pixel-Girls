@@ -53,16 +53,16 @@ public class WomanEntity extends AnimalEntity {
 
         if (heldItem == favouriteItem) {
 
-            dialogueContainer.setDialogue("A " + heldItem.getTranslatedName().toLowerCase() + ", my favourite!");
+            dialogueContainer.pixel_girls$pushDialogue(this.name, "A " + heldItem.getTranslatedName().toLowerCase() + ", my favourite!");
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
         } else if (heldItem instanceof FoodItem) {
 
             if (Math.random() > 0.5) {
-                dialogueContainer.setDialogue("Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!");
+                dialogueContainer.pixel_girls$pushDialogue(this.name, "Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!");
             } else {
-                dialogueContainer.setDialogue("That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!");
+                dialogueContainer.pixel_girls$pushDialogue(this.name, "That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!");
             }
 
             this.heal(((FoodItem) heldItem).getHealthRestored());
@@ -76,7 +76,7 @@ public class WomanEntity extends AnimalEntity {
         } else {
 
             // maybe open trading menu?
-            dialogueContainer.setDialogue("Hi!");
+            dialogueContainer.pixel_girls$pushDialogue(this.name, "I love roses :3");
 
             this.setTarget(player);
         }
