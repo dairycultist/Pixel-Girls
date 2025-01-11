@@ -21,7 +21,6 @@ public class BiomeMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     public void letWomenSpawnNaturally(CallbackInfo ci) {
 
-        // natural spawning (maybe badass girls in the nether too)
         this.spawnablePassive.add(new EntitySpawnGroup(WomanEntity.class, 10));
     }
 }

@@ -1,5 +1,6 @@
 package net.bluebunnex.pixelgirls.mixin;
 
+import net.bluebunnex.pixelgirls.DialogueContainer;
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,6 +31,17 @@ public class InGameHudMixin {
     @Inject(method = "render", at = @At("TAIL"))
     private void renderMixin(float tickDelta, boolean screenOpen, int mouseX, int mouseY, CallbackInfo ci) {
 
+        ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
+        int cx = scaler.getScaledWidth() / 2;
+        int cy = scaler.getScaledHeight() / 2;
+
+        TextRenderer textRenderer = this.minecraft.textRenderer;
+
+        // render dialogue
+        String dialogue = ((DialogueContainer) (Object) this.minecraft.player).getDialogue();
+
+        textRenderer.drawWithShadow(dialogue, cx - textRenderer.getWidth(dialogue) / 2, cy + 20, -1);
+
         // tooltip on woman hover
         if (
             this.minecraft.crosshairTarget != null
@@ -37,12 +49,7 @@ public class InGameHudMixin {
             && this.minecraft.crosshairTarget.entity instanceof WomanEntity woman
         ) {
 
-            ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
-            int x = scaler.getScaledWidth() / 2 + 10;
-            int y = scaler.getScaledHeight() / 2 - 12;
-
-            TextRenderer textRenderer = this.minecraft.textRenderer;
-
+            // render tooltip
             {
                 GL11.glPushMatrix();
 
@@ -54,8 +61,8 @@ public class InGameHudMixin {
                 GL11.glBlendFunc(770, 771);
 
                 // box behind text to make it easier to read (stolen from DrawContext)
-                x1 = x - 2; x2 = x + 60;
-                y1 = y - 2; y2 = y + 26;
+                x1 = 2; x2 = 64;
+                y1 = 2; y2 = 30;
 
                 GL11.glColor4f(0f, 0f, 0.03f, 0.5f);
                 tessellator.startQuads();
@@ -84,22 +91,23 @@ public class InGameHudMixin {
                 GL11.glDisable(3042);
 
                 GL11.glPopMatrix();
+
+                // text
+                ITEM_RENDERER.renderGuiItem(
+                        textRenderer,
+                        this.minecraft.textureManager,
+                        woman.favouriteItem.id,
+                        0,
+                        woman.favouriteItem.getTextureId(0),
+                        37,
+                        12
+                );
+                GL11.glDisable(2896); // renderGuiItem is destructive
+                GL11.glDisable(2884);
+
+                textRenderer.drawWithShadow(woman.name, 4, 6, -1);
+                textRenderer.drawWithShadow("Loves:", 4, 18, -7829368);
             }
-
-            ITEM_RENDERER.renderGuiItem(
-                    textRenderer,
-                    this.minecraft.textureManager,
-                    woman.favouriteItem.id,
-                    0,
-                    woman.favouriteItem.getTextureId(0),
-                    x + 33,
-                    y + 8
-            );
-            GL11.glDisable(2896); // renderGuiItem is destructive
-            GL11.glDisable(2884);
-
-            textRenderer.drawWithShadow(woman.name, x, y + 2, -1);
-            textRenderer.drawWithShadow("Loves:", x, y + 14, -11184811);
         }
     }
 }

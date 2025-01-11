@@ -1,5 +1,6 @@
 package net.bluebunnex.pixelgirls.entity;
 
+import net.bluebunnex.pixelgirls.DialogueContainer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,9 +12,10 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
+    private int variant;
+
     public String name;
     public Item favouriteItem;
-    private int variant;
 
     public WomanEntity(World world) {
         super(world);
@@ -47,18 +49,20 @@ public class WomanEntity extends AnimalEntity {
         ItemStack heldStack = player.inventory.getSelectedItem();
         Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
+        DialogueContainer dialogueContainer = ((DialogueContainer) (Object) player);
+
         if (heldItem == favouriteItem) {
 
-            player.sendMessage("Aww! How'd you know " + heldItem.getTranslatedName().toLowerCase() + "s are my favourite?");
+            dialogueContainer.setDialogue("A " + heldItem.getTranslatedName().toLowerCase() + ", my favourite!");
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
         } else if (heldItem instanceof FoodItem) {
 
             if (Math.random() > 0.5) {
-                player.sendMessage("\"Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!\"");
+                dialogueContainer.setDialogue("Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!");
             } else {
-                player.sendMessage("\"That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!\"");
+                dialogueContainer.setDialogue("That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!");
             }
 
             this.heal(((FoodItem) heldItem).getHealthRestored());
@@ -71,10 +75,13 @@ public class WomanEntity extends AnimalEntity {
 
         } else {
 
-            player.sendMessage("\"Hi!\"");
+            // maybe open trading menu?
+            dialogueContainer.setDialogue("Hi!");
+
+            this.setTarget(player);
         }
 
-        //world.playSound(this, "pixelgirls:entity.woman.giggle", 1.0F, 1.0F);
+        //world.playSound(this, "pixelgirls:entity.woman.talk", 1.0F, 1.0F);
         player.swingHand();
 
         return true;
@@ -84,19 +91,44 @@ public class WomanEntity extends AnimalEntity {
     public void tick() {
         super.tick();
 
-        PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
+        if (this.isImmobile()) {
 
-        if (player != null && this.canSee(player)) {
+            // continue looking at target until they get out of range
+            this.lookAt(this.getTarget(), 45f, 999f); // pitch and yaw are backwards
 
-            this.setTarget(player);
+        } else if (this.getTarget() == null) {
 
-            if (this.isImmobile())
-                this.lookAt(player, 45f, 999f); // pitch and yaw are backwards
+            // if we don't have a target, look for a potential target
+
+            PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
+
+            if (player != null && this.canSee(player)) {
+
+                ItemStack heldStack = player.inventory.getSelectedItem();
+                Item heldItem = heldStack != null ? heldStack.getItem() : null;
+
+                if (heldItem == favouriteItem)
+                    this.setTarget(player);
+            }
 
         } else {
 
-            this.setTarget(null);
+            // if we have a target, only continue targeting it while they are holding our favourite item
+
+            if (this.canSee(this.getTarget())) {
+
+                ItemStack heldStack = ((PlayerEntity) this.getTarget()).inventory.getSelectedItem();
+                Item heldItem = heldStack != null ? heldStack.getItem() : null;
+
+                if (heldItem != favouriteItem)
+                    this.setTarget(null);
+
+            } else {
+
+                this.setTarget(null);
+            }
         }
+
     }
 
     @Override
