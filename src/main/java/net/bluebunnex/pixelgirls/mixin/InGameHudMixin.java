@@ -31,11 +31,12 @@ public class InGameHudMixin {
 
         ScreenScaler scaler = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
         int cx = scaler.getScaledWidth() / 2;
-        int cy = scaler.getScaledHeight() / 2;
+        int cy = scaler.getScaledHeight() - 70;
 
         TextRenderer textRenderer = this.minecraft.textRenderer;
 
         // render dialogue
+        // TODO make dialogue box size adaptive/make text wrap at word
         DialogueContainer dialogueContainer = (DialogueContainer) this.minecraft.player;
 
         if (dialogueContainer.pixel_girls$hasDialogue()) {
@@ -46,7 +47,7 @@ public class InGameHudMixin {
             // box behind text to make it easier to read (stolen from DrawContext)
             GL11.glPushMatrix();
 
-            int x1 = cx - 60, x2 = cx + 60,
+            int x1 = cx - 80, x2 = cx + 80,
                 y1 = cy + 8,  y2 = cy + 30;
 
             Tessellator tessellator = Tessellator.INSTANCE;
@@ -71,27 +72,5 @@ public class InGameHudMixin {
             textRenderer.drawWithShadow(speakerName, cx - textRenderer.getWidth(speakerName) / 2, cy + 10, -4473925);
             textRenderer.drawWithShadow(dialogue, cx - textRenderer.getWidth(dialogue) / 2, cy + 20, -1);
         }
-
-        // tooltip on woman hover (could totally use this to make a What Am I Looking At clone)
-//        if (
-//            this.minecraft.crosshairTarget != null
-//            && this.minecraft.crosshairTarget.type == HitResultType.ENTITY
-//            && this.minecraft.crosshairTarget.entity instanceof WomanEntity woman
-//        ) {
-//
-//            ITEM_RENDERER.renderGuiItem(
-//                    textRenderer,
-//                    this.minecraft.textureManager,
-//                    woman.favouriteItem.id,
-//                    0,
-//                    woman.favouriteItem.getTextureId(0),
-//                    37,
-//                    12
-//            );
-//            GL11.glDisable(2896); // renderGuiItem is destructive
-//            GL11.glDisable(2884);
-//
-//            textRenderer.drawWithShadow("Loves:", 4, 18, -7829368);
-//        }
     }
 }

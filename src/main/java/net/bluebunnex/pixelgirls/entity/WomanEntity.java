@@ -2,6 +2,7 @@ package net.bluebunnex.pixelgirls.entity;
 
 import net.bluebunnex.pixelgirls.DialogueContainer;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodItem;
@@ -23,7 +24,7 @@ public class WomanEntity extends AnimalEntity {
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant((int) (Math.random() * 2));
+        this.setVariant(this.random.nextInt(0, 2));
     }
 
     public void setVariant(int variant) {
@@ -40,11 +41,28 @@ public class WomanEntity extends AnimalEntity {
 
             case 1:
                 this.name = "TVetta";
-                this.favouriteItem = Block.REDSTONE_TORCH.asItem();
+                this.favouriteItem = Block.LIT_REDSTONE_TORCH.asItem();
                 break;
         }
 
         this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
+    }
+
+    @Override
+    public boolean damage(Entity damageSource, int amount) {
+
+        if (damageSource instanceof PlayerEntity player) {
+
+            String message = switch (this.random.nextInt(0, 3)) {
+                case 0 -> "Ow, stop!";
+                case 1 -> "That hurts!";
+                default -> "Wahh!";
+            };
+
+            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, message);
+        }
+
+        return super.damage(damageSource, amount);
     }
 
     @Override
@@ -54,7 +72,7 @@ public class WomanEntity extends AnimalEntity {
         ItemStack heldStack = player.inventory.getSelectedItem();
         Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-        DialogueContainer dialogueContainer = ((DialogueContainer) (Object) player);
+        DialogueContainer dialogueContainer = ((DialogueContainer) player);
 
         if (heldItem == favouriteItem) {
 
