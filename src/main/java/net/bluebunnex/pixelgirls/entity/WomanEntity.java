@@ -23,7 +23,7 @@ public class WomanEntity extends AnimalEntity {
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant(0);
+        this.setVariant((int) (Math.random() * 2));
     }
 
     public void setVariant(int variant) {
@@ -36,6 +36,11 @@ public class WomanEntity extends AnimalEntity {
             case 0:
                 this.name = "Rosa Maria";
                 this.favouriteItem = Block.ROSE.asItem();
+                break;
+
+            case 1:
+                this.name = "TVetta";
+                this.favouriteItem = Block.REDSTONE_TORCH.asItem();
                 break;
         }
 
@@ -53,7 +58,7 @@ public class WomanEntity extends AnimalEntity {
 
         if (heldItem == favouriteItem) {
 
-            dialogueContainer.pixel_girls$pushDialogue(this.name, "A " + heldItem.getTranslatedName().toLowerCase() + ", my favourite!");
+            dialogueContainer.pixel_girls$pushDialogue(this.name, "A " + favouriteItem.getTranslatedName().toLowerCase() + ", my favourite!");
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
@@ -76,7 +81,7 @@ public class WomanEntity extends AnimalEntity {
         } else {
 
             // maybe open trading menu?
-            dialogueContainer.pixel_girls$pushDialogue(this.name, "I love roses :3");
+            dialogueContainer.pixel_girls$pushDialogue(this.name, "I'd love a " + favouriteItem.getTranslatedName().toLowerCase() + ".");
 
             this.setTarget(player);
         }
