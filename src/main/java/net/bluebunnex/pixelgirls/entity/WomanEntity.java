@@ -24,7 +24,7 @@ public class WomanEntity extends AnimalEntity {
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant(this.random.nextInt(0, 2));
+        this.setVariant(this.random.nextInt(0, 3));
     }
 
     public void setVariant(int variant) {
@@ -43,9 +43,19 @@ public class WomanEntity extends AnimalEntity {
                 this.name = "TVetta";
                 this.favouriteItem = Block.LIT_REDSTONE_TORCH.asItem();
                 break;
+
+            case 2:
+                this.name = "Senko";
+                this.favouriteItem = Item.COOKED_FISH.asItem();
+                break;
         }
 
         this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
+    }
+
+    @Override
+    protected boolean canDespawn() {
+        return false;
     }
 
     @Override
@@ -56,7 +66,7 @@ public class WomanEntity extends AnimalEntity {
             String message = switch (this.random.nextInt(0, 3)) {
                 case 0 -> "Ow, stop!";
                 case 1 -> "That hurts!";
-                default -> "Wahh!";
+                default -> name.equals("Senko") ? "Eep!" : "Wahh!";
             };
 
             ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, message);
@@ -91,7 +101,7 @@ public class WomanEntity extends AnimalEntity {
             this.heal(((FoodItem) heldItem).getHealthRestored());
 
             for (int i = 0; i < 5; i++) {
-                this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+                this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() * 0.5, Math.random() - 0.5);
             }
 
             player.inventory.removeStack(player.inventory.selectedSlot, 1);
