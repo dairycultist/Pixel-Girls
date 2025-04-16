@@ -12,6 +12,7 @@
 ### Women currently in the mod
 
 - Senko (from _The Helpful Fox Senko-San_)
+- Koishi (from _Touhou Project_)
 
 ### Planned
 - badass girls that spawn in the nether
@@ -19,8 +20,9 @@
 - befriending women by giving them their favourite item
   - "Follow me" / they follow you
   - "Stick around this place" / they wander around, but never get too far from where you told them to stay. good for villages!
-- women who you've befriended can be told to do stuff (like the mod Touhou Little Maids)
+- women who you've befriended can be told to do stuff (like the mod Touhou Little Maids, I need to figure out how to do a mouse GUI tho)
 - remove sus hurt sounds
+- make speech part of translation file
 
 ### Thanks to
 - [This women for making pain sounds and posting them online](https://freesound.org/people/MadamVicious/sounds/218190/)
