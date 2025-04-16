@@ -1,7 +1,6 @@
 package net.bluebunnex.pixelgirls.entity;
 
 import net.bluebunnex.pixelgirls.DialogueContainer;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,18 +34,12 @@ public class WomanEntity extends AnimalEntity {
 
             default:
             case 0:
-                this.name = "Rosa Maria";
-                this.favouriteItem = Block.ROSE.asItem();
-                break;
-
-            case 1:
-                this.name = "TVetta";
-                this.favouriteItem = Block.LIT_REDSTONE_TORCH.asItem();
-                break;
-
-            case 2:
                 this.name = "Senko";
                 this.favouriteItem = Item.COOKED_FISH.asItem();
+                break;
+            case 1:
+                this.name = "Koishi";
+                this.favouriteItem = Item.APPLE.asItem();
                 break;
         }
 
