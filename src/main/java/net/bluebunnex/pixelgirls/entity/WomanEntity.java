@@ -23,7 +23,7 @@ public class WomanEntity extends AnimalEntity {
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant(this.random.nextInt(0, 3));
+        this.setVariant(this.random.nextInt(0, 4));
     }
 
     public void setVariant(int variant) {
@@ -39,6 +39,14 @@ public class WomanEntity extends AnimalEntity {
                 break;
             case 1:
                 this.name = "Koishi";
+                this.favouriteItem = Item.APPLE.asItem();
+                break;
+            case 2:
+                this.name = "Miku";
+                this.favouriteItem = Item.DIAMOND.asItem();
+                break;
+            case 3:
+                this.name = "Sakura Miku";
                 this.favouriteItem = Item.APPLE.asItem();
                 break;
         }
@@ -101,7 +109,6 @@ public class WomanEntity extends AnimalEntity {
 
         } else {
 
-            // maybe open trading menu?
             dialogueContainer.pixel_girls$pushDialogue(this.name, "I'd love a " + favouriteItem.getTranslatedName().toLowerCase() + ".");
 
             this.setTarget(player);
