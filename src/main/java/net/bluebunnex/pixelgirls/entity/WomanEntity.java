@@ -17,8 +17,34 @@ public class WomanEntity extends AnimalEntity {
     private static final WomanMind GENERIC_MIND = new WomanMind() {
 
         @Override
+        public ItemStack[] getTradePair(int i) {
+            return new ItemStack[] {
+                new ItemStack(Item.COOKED_FISH, 5), new ItemStack(Item.DIAMOND, 1)
+            };
+        }
+
+        @Override
+        public int getTradePairCount() {
+            return 1;
+        }
+
+        @Override
         public String sayLoveDiamonds(Random random) {
-            return "Woah, so shiny! I have a few of these.";
+
+            return switch (random.nextInt(0, 2)) {
+                case 0 -> "Nice, I have a few of those.";
+                default -> "You willing to trade that?";
+            };
+        }
+
+        @Override
+        public String sayWrongItem(Random random, ItemStack stack) {
+            return "I didn't ask for " + stack.getItem().getTranslatedName();
+        }
+
+        @Override
+        public String sayRightItem(Random random, ItemStack stack) {
+            return stack.count + " " + stack.getItem().getTranslatedName() + "! Just what I needed.";
         }
 
         @Override
@@ -32,13 +58,28 @@ public class WomanEntity extends AnimalEntity {
         }
 
         @Override
-        public String sayEat(Random random, Item heldItem) {
-            return "That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!";
+        public String sayEat(Random random, ItemStack stack) {
+            return "That " + stack.getItem().getTranslatedName().toLowerCase() + " was delicious!";
+        }
+
+        @Override
+        public String sayNotHungry(Random random, ItemStack stack) {
+            return "No thanks, I'm full!";
         }
 
         @Override
         public String sayIdle(Random random) {
-            return "Hey!";
+
+            ItemStack[] tradePair = getTradePair(0);
+
+            return switch (random.nextInt(0, 2)) {
+                case 0 -> "Isn't today nice?";
+                default ->
+                        "I trade " + tradePair[0].count + " " +
+                        tradePair[0].getItem().getTranslatedName() + " for " +
+                        tradePair[1].count + " " +
+                        tradePair[1].getItem().getTranslatedName() + " if you're interested!";
+            };
         }
     };
 
@@ -115,15 +156,22 @@ public class WomanEntity extends AnimalEntity {
 
         } else if (heldItem instanceof FoodItem) {
 
-            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldItem));
+            if (this.health >= this.maxHealth) {
 
-            this.heal(((FoodItem) heldItem).getHealthRestored());
+                dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayNotHungry(this.random, heldStack));
 
-            for (int i = 0; i < 5; i++) {
-                this.world.addParticle("smoke", this.x, this.y + 0.5, this.z, Math.random() - 0.5, Math.random() * 0.5, Math.random() - 0.5);
+            } else {
+
+                dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldStack));
+
+                this.heal(((FoodItem) heldItem).getHealthRestored());
+
+                for (int i = 0; i < 5; i++) {
+                    this.world.addParticle("heart", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
+                }
+
+                player.inventory.removeStack(player.inventory.selectedSlot, 1);
             }
-
-            player.inventory.removeStack(player.inventory.selectedSlot, 1);
 
         } else {
 
