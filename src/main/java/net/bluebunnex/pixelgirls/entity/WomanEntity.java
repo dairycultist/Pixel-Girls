@@ -72,9 +72,10 @@ public class WomanEntity extends AnimalEntity {
 //            case 1:
 //                this.name = "Koishi";
 //                break;
-//            case 2:
-//                this.name = "Miku";
-//                break;
+            case 2:
+                this.name = "Miku";
+                this.mind = GENERIC_MIND;
+                break;
 //            case 3:
 //                this.name = "Sakura Miku";
 //                break;
@@ -141,16 +142,11 @@ public class WomanEntity extends AnimalEntity {
     public void tick() {
         super.tick();
 
-        // TODO this follow system sucks but idk
+        if (this.isImmobile()) { // too close to target to un-target
 
-        if (this.isImmobile()) {
-
-            // continue looking at target until they get out of range
             this.lookAt(this.getTarget(), 45f, 999f); // pitch and yaw are backwards
 
-        } else if (this.getTarget() == null) {
-
-            // if we don't have a target, look for a potential target
+        } else if (this.getTarget() == null) { // no target, look for a potential target
 
             PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
 
@@ -163,9 +159,7 @@ public class WomanEntity extends AnimalEntity {
                     this.setTarget(player);
             }
 
-        } else {
-
-            // if we have a target, only continue targeting them while they are holding a diamond
+        } else { // have a target (that is far away), only continue targeting if we see them holding a diamond
 
             if (this.canSee(this.getTarget())) {
 
