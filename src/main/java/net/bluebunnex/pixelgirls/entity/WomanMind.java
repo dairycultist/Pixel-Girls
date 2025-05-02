@@ -6,21 +6,15 @@ import java.util.Random;
 
 public interface WomanMind {
 
-    // gives information on what a woman trades and how she speaks
-
-    public ItemStack[] getTradePair(int i);
-
-    public int getTradePairCount();
+    // TODO "Missions" save NBT for mission index (-1 for idle) and mission dialogue progress
+    // "Hey! I have a favour."
+    // "Can you get me a diamond?"
 
     String sayIdle(Random random);
 
-    public String sayLoveDiamonds(Random random);
+    String sayLoveDiamonds(Random random);
 
     String sayDamage(Random random);
-
-    String sayWrongItem(Random random, ItemStack stack);
-
-    String sayRightItem(Random random, ItemStack stack);
 
     String sayEat(Random random, ItemStack stack);
 
