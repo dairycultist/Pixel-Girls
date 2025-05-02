@@ -10,80 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import static net.bluebunnex.pixelgirls.entity.WomanMinds.GENERIC_MIND;
 
 public class WomanEntity extends AnimalEntity {
-
-    private static final WomanMind GENERIC_MIND = new WomanMind() {
-
-        @Override
-        public ItemStack[] getTradePair(int i) {
-            return new ItemStack[] {
-                new ItemStack(Item.COOKED_FISH, 5), new ItemStack(Item.DIAMOND, 1)
-            };
-        }
-
-        @Override
-        public int getTradePairCount() {
-            return 1;
-        }
-
-        @Override
-        public String sayLoveDiamonds(Random random) {
-
-            return switch (random.nextInt(0, 2)) {
-                case 0 -> "Nice, I have a few of those.";
-                default -> "You willing to trade that?";
-            };
-        }
-
-        @Override
-        public String sayWrongItem(Random random, ItemStack stack) {
-            return "I didn't ask for " + stack.getItem().getTranslatedName();
-        }
-
-        @Override
-        public String sayRightItem(Random random, ItemStack stack) {
-            return stack.count + " " + stack.getItem().getTranslatedName() + "! Just what I needed.";
-        }
-
-        @Override
-        public String sayDamage(Random random) {
-
-            return switch (random.nextInt(0, 3)) {
-                case 0 -> "Ow, stop!";
-                case 1 -> "That hurts!";
-                default -> "Wahh!";
-            };
-        }
-
-        @Override
-        public String sayEat(Random random, ItemStack stack) {
-            return "That " + stack.getItem().getTranslatedName().toLowerCase() + " was delicious!";
-        }
-
-        @Override
-        public String sayNotHungry(Random random, ItemStack stack) {
-            return "No thanks, I'm full!";
-        }
-
-        @Override
-        public String sayIdle(Random random) {
-
-            ItemStack[] tradePair = getTradePair(0);
-
-            return switch (random.nextInt(0, 2)) {
-                case 0 -> "Isn't today nice?";
-                default ->
-                        "I trade " + tradePair[0].count + " " +
-                        tradePair[0].getItem().getTranslatedName() + " for " +
-                        tradePair[1].count + " " +
-                        tradePair[1].getItem().getTranslatedName() + " if you're interested!";
-            };
-        }
-    };
-
-    // senko says Eep!
 
     private int variant;
     private WomanMind mind;
@@ -110,16 +39,18 @@ public class WomanEntity extends AnimalEntity {
                 this.name = "Senko";
                 this.mind = GENERIC_MIND;
                 break;
-//            case 1:
-//                this.name = "Koishi";
-//                break;
+            case 1:
+                this.name = "Koishi"; // TODO update boob texture
+                this.mind = GENERIC_MIND;
+                break;
             case 2:
                 this.name = "Miku";
                 this.mind = GENERIC_MIND;
                 break;
-//            case 3:
-//                this.name = "Sakura Miku";
-//                break;
+            case 3:
+                this.name = "Sakura Miku"; // TODO update boob texture
+                this.mind = GENERIC_MIND;
+                break;
         }
 
         this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
