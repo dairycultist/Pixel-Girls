@@ -10,12 +10,44 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class WomanEntity extends AnimalEntity {
 
+    private static final WomanMind GENERIC_MIND = new WomanMind() {
+
+        @Override
+        public String sayLoveDiamonds(Random random) {
+            return "Woah, so shiny! I have a few of these.";
+        }
+
+        @Override
+        public String sayDamage(Random random) {
+
+            return switch (random.nextInt(0, 3)) {
+                case 0 -> "Ow, stop!";
+                case 1 -> "That hurts!";
+                default -> "Wahh!";
+            };
+        }
+
+        @Override
+        public String sayEat(Random random, Item heldItem) {
+            return "That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!";
+        }
+
+        @Override
+        public String sayIdle(Random random) {
+            return "Hey!";
+        }
+    };
+
+    // senko says Eep!
+
     private int variant;
+    private WomanMind mind;
 
     public String name;
-    public Item favouriteItem;
 
     public WomanEntity(World world) {
         super(world);
@@ -35,20 +67,17 @@ public class WomanEntity extends AnimalEntity {
             default:
             case 0:
                 this.name = "Senko";
-                this.favouriteItem = Item.COOKED_FISH.asItem();
+                this.mind = GENERIC_MIND;
                 break;
-            case 1:
-                this.name = "Koishi";
-                this.favouriteItem = Item.APPLE.asItem();
-                break;
-            case 2:
-                this.name = "Miku";
-                this.favouriteItem = Item.DIAMOND.asItem();
-                break;
-            case 3:
-                this.name = "Sakura Miku";
-                this.favouriteItem = Item.APPLE.asItem();
-                break;
+//            case 1:
+//                this.name = "Koishi";
+//                break;
+//            case 2:
+//                this.name = "Miku";
+//                break;
+//            case 3:
+//                this.name = "Sakura Miku";
+//                break;
         }
 
         this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
@@ -64,13 +93,7 @@ public class WomanEntity extends AnimalEntity {
 
         if (damageSource instanceof PlayerEntity player) {
 
-            String message = switch (this.random.nextInt(0, 3)) {
-                case 0 -> "Ow, stop!";
-                case 1 -> "That hurts!";
-                default -> name.equals("Senko") ? "Eep!" : "Wahh!";
-            };
-
-            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, message);
+            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, this.mind.sayDamage(this.random));
         }
 
         return super.damage(damageSource, amount);
@@ -85,19 +108,13 @@ public class WomanEntity extends AnimalEntity {
 
         DialogueContainer dialogueContainer = ((DialogueContainer) player);
 
-        if (heldItem == favouriteItem) {
+        if (heldItem == Item.DIAMOND) {
 
-            dialogueContainer.pixel_girls$pushDialogue(this.name, "A " + favouriteItem.getTranslatedName().toLowerCase() + ", my favourite!");
-
-            player.inventory.removeStack(player.inventory.selectedSlot, 1);
+            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayLoveDiamonds(this.random));
 
         } else if (heldItem instanceof FoodItem) {
 
-            if (Math.random() > 0.5) {
-                dialogueContainer.pixel_girls$pushDialogue(this.name, "Thank you for the " + heldItem.getTranslatedName().toLowerCase() + "!");
-            } else {
-                dialogueContainer.pixel_girls$pushDialogue(this.name, "That " + heldItem.getTranslatedName().toLowerCase() + " was delicious!");
-            }
+            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldItem));
 
             this.heal(((FoodItem) heldItem).getHealthRestored());
 
@@ -109,7 +126,7 @@ public class WomanEntity extends AnimalEntity {
 
         } else {
 
-            dialogueContainer.pixel_girls$pushDialogue(this.name, "I'd love a " + favouriteItem.getTranslatedName().toLowerCase() + ".");
+            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayIdle(this.random));
 
             this.setTarget(player);
         }
@@ -123,6 +140,8 @@ public class WomanEntity extends AnimalEntity {
     @Override
     public void tick() {
         super.tick();
+
+        // TODO this follow system sucks but idk
 
         if (this.isImmobile()) {
 
@@ -140,20 +159,20 @@ public class WomanEntity extends AnimalEntity {
                 ItemStack heldStack = player.inventory.getSelectedItem();
                 Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-                if (heldItem == favouriteItem)
+                if (heldItem == Item.DIAMOND)
                     this.setTarget(player);
             }
 
         } else {
 
-            // if we have a target, only continue targeting it while they are holding our favourite item
+            // if we have a target, only continue targeting them while they are holding a diamond
 
             if (this.canSee(this.getTarget())) {
 
                 ItemStack heldStack = ((PlayerEntity) this.getTarget()).inventory.getSelectedItem();
                 Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-                if (heldItem != favouriteItem)
+                if (heldItem != Item.DIAMOND)
                     this.setTarget(null);
 
             } else {
@@ -196,11 +215,11 @@ public class WomanEntity extends AnimalEntity {
 
     @Override
     protected String getHurtSound() {
-        return "pixelgirls:entity.woman.hurt";
+        return "mob.chickenhurt"; // "pixelgirls:entity.woman.hurt" // hurt(1-3).ogg
     }
 
     @Override
     protected String getDeathSound() {
-        return "pixelgirls:entity.woman.hurt";
+        return "mob.chickenhurt";
     }
 }
