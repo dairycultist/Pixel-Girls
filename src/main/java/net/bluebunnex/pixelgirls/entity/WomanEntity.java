@@ -63,7 +63,8 @@ public class WomanEntity extends AnimalEntity {
 
         if (damageSource instanceof PlayerEntity player) {
 
-            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, "Ow!");
+            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player, true));
+            dialogueState = dialogueState.getNextState(this.random, player, true);
         }
 
         return super.damage(damageSource, amount);
@@ -73,10 +74,8 @@ public class WomanEntity extends AnimalEntity {
     public boolean interact(PlayerEntity player) {
         super.onPlayerInteraction(player);
 
-        DialogueContainer dialogueContainer = ((DialogueContainer) player);
-
-        dialogueContainer.pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player));
-        dialogueState = dialogueState.getNextState(this.random, player);
+        ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player, false));
+        dialogueState = dialogueState.getNextState(this.random, player, false);
 
         this.setTarget(player);
 

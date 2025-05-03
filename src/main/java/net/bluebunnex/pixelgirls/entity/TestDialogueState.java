@@ -1,35 +1,44 @@
 package net.bluebunnex.pixelgirls.entity;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
 public class TestDialogueState extends DialogueState {
 
-    private int i = 0;
-    private String[] dialogue = {
+    private static final String[] DIALOGUE = {
             "Hi, this is a test dialogue.",
             "I follow you if you hold a diamond!",
             "I love you very much <3",
             "This dialogue will now repeat :3"
     };
 
-    @Override
-    public DialogueState getNextState(Random random, PlayerEntity player) {
+    private int i = 0;
 
-        if (i == dialogue.length) {
+    @Override
+    public DialogueState getNextState(Random random, PlayerEntity player, boolean isAttack) {
+
+        if (i == DIALOGUE.length)
             return new TestDialogueState();
-        }
+
         return this;
     }
 
     @Override
-    public String getDialogue(Random random, PlayerEntity player) {
+    public String getDialogue(Random random, PlayerEntity player, boolean isAttack) {
 
-//        ItemStack heldStack = player.inventory.getSelectedItem();
-//        Item heldItem = heldStack != null ? heldStack.getItem() : null;
+        ItemStack heldStack = player.inventory.getSelectedItem();
+        Item heldItem = heldStack != null ? heldStack.getItem() : null;
 
-        return dialogue[i++];
+        if (isAttack)
+            return "Ow! I'm just a test!";
+
+        if (heldItem == Item.DIAMOND)
+            return "This diamond is part of the test.";
+
+        return DIALOGUE[i++];
     }
 }
 
