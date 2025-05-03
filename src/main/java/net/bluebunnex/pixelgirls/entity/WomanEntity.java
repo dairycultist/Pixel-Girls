@@ -4,18 +4,15 @@ import net.bluebunnex.pixelgirls.DialogueContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
-import static net.bluebunnex.pixelgirls.entity.WomanMinds.GENERIC_MIND;
-
 public class WomanEntity extends AnimalEntity {
 
     private int variant;
-    private WomanMind mind;
+    private DialogueState dialogueState;
 
     public String name;
 
@@ -37,19 +34,19 @@ public class WomanEntity extends AnimalEntity {
             default:
             case 0:
                 this.name = "Senko";
-                this.mind = GENERIC_MIND;
+                this.dialogueState = new TestDialogueState();
                 break;
             case 1:
                 this.name = "Koishi"; // TODO update boob texture
-                this.mind = GENERIC_MIND;
+                this.dialogueState = new TestDialogueState();
                 break;
             case 2:
                 this.name = "Miku";
-                this.mind = GENERIC_MIND;
+                this.dialogueState = new TestDialogueState();
                 break;
             case 3:
                 this.name = "Sakura Miku"; // TODO update boob texture
-                this.mind = GENERIC_MIND;
+                this.dialogueState = new TestDialogueState();
                 break;
         }
 
@@ -66,7 +63,7 @@ public class WomanEntity extends AnimalEntity {
 
         if (damageSource instanceof PlayerEntity player) {
 
-            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, this.mind.sayDamage(this.random));
+            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, "Ow!");
         }
 
         return super.damage(damageSource, amount);
@@ -76,40 +73,12 @@ public class WomanEntity extends AnimalEntity {
     public boolean interact(PlayerEntity player) {
         super.onPlayerInteraction(player);
 
-        ItemStack heldStack = player.inventory.getSelectedItem();
-        Item heldItem = heldStack != null ? heldStack.getItem() : null;
-
         DialogueContainer dialogueContainer = ((DialogueContainer) player);
 
-        if (heldItem == Item.DIAMOND) {
+        dialogueContainer.pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player));
+        dialogueState = dialogueState.getNextState(this.random, player);
 
-            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayLoveDiamonds(this.random));
-
-        } else if (heldItem instanceof FoodItem) {
-
-            if (this.health >= this.maxHealth) {
-
-                dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayNotHungry(this.random, heldStack));
-
-            } else {
-
-                dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldStack));
-
-                this.heal(((FoodItem) heldItem).getHealthRestored());
-
-                for (int i = 0; i < 5; i++) {
-                    this.world.addParticle("heart", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
-                }
-
-                player.inventory.removeStack(player.inventory.selectedSlot, 1);
-            }
-
-        } else {
-
-            dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayIdle(this.random));
-
-            this.setTarget(player);
-        }
+        this.setTarget(player);
 
         //world.playSound(this, "pixelgirls:entity.woman.talk", 1.0F, 1.0F);
         player.swingHand();
