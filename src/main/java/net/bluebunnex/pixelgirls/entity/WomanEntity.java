@@ -1,19 +1,14 @@
 package net.bluebunnex.pixelgirls.entity;
 
-import net.bluebunnex.pixelgirls.DialogueContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
     private int variant;
-    private DialogueState dialogueState;
-
     public String name;
 
     public WomanEntity(World world) {
@@ -34,19 +29,15 @@ public class WomanEntity extends AnimalEntity {
             default:
             case 0:
                 this.name = "Senko";
-                this.dialogueState = new TestDialogueState();
                 break;
             case 1:
                 this.name = "Koishi"; // TODO update boob texture
-                this.dialogueState = new TestDialogueState();
                 break;
             case 2:
                 this.name = "Miku";
-                this.dialogueState = new TestDialogueState();
                 break;
             case 3:
                 this.name = "Sakura Miku"; // TODO update boob texture
-                this.dialogueState = new TestDialogueState();
                 break;
         }
 
@@ -59,13 +50,27 @@ public class WomanEntity extends AnimalEntity {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+
+        if (this.getTarget() != null) {
+
+            if (this.isImmobile()) { // close to target
+
+                this.lookAt(this.getTarget(), 45f, 999f); // pitch and yaw are backwards
+
+            } else { // have a target (that is far away), only continue targeting if we can see them
+
+                if (!this.canSee(this.getTarget()))
+                    this.setTarget(null);
+            }
+        }
+    }
+
+    @Override
     public boolean damage(Entity damageSource, int amount) {
 
-        if (damageSource instanceof PlayerEntity player) {
-
-            ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player, true));
-            dialogueState = dialogueState.getNextState(this.random, player, true);
-        }
+        this.setTarget(null);
 
         return super.damage(damageSource, amount);
     }
@@ -74,54 +79,12 @@ public class WomanEntity extends AnimalEntity {
     public boolean interact(PlayerEntity player) {
         super.onPlayerInteraction(player);
 
-        ((DialogueContainer) player).pixel_girls$pushDialogue(this.name, dialogueState.getDialogue(this.random, player, false));
-        dialogueState = dialogueState.getNextState(this.random, player, false);
-
-        this.setTarget(player);
+        this.setTarget(this.getTarget() == player ? null : player);
 
         //world.playSound(this, "pixelgirls:entity.woman.talk", 1.0F, 1.0F);
         player.swingHand();
 
         return true;
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (this.isImmobile()) { // too close to target to un-target
-
-            this.lookAt(this.getTarget(), 45f, 999f); // pitch and yaw are backwards
-
-        } else if (this.getTarget() == null) { // no target, look for a potential target
-
-            PlayerEntity player = this.world.getClosestPlayer(this, 16.0);
-
-            if (player != null && this.canSee(player)) {
-
-                ItemStack heldStack = player.inventory.getSelectedItem();
-                Item heldItem = heldStack != null ? heldStack.getItem() : null;
-
-                if (heldItem == Item.DIAMOND)
-                    this.setTarget(player);
-            }
-
-        } else { // have a target (that is far away), only continue targeting if we see them holding a diamond
-
-            if (this.canSee(this.getTarget())) {
-
-                ItemStack heldStack = ((PlayerEntity) this.getTarget()).inventory.getSelectedItem();
-                Item heldItem = heldStack != null ? heldStack.getItem() : null;
-
-                if (heldItem != Item.DIAMOND)
-                    this.setTarget(null);
-
-            } else {
-
-                this.setTarget(null);
-            }
-        }
-
     }
 
     @Override
@@ -131,7 +94,7 @@ public class WomanEntity extends AnimalEntity {
             return false;
 
         // don't move when closer than 5 blocks to target player so we don't press into them
-        return this.getDistance(this.getTarget()) < 5;
+        return this.getDistance(this.getTarget()) < 4;
     }
 
     @Override

@@ -4,13 +4,10 @@
   "package": "net.bluebunnex.pixelgirls.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BiomeMixin",
-    "PlayerEntityMixin"
+    "BiomeMixin"
   ],
   "server": [],
-  "client": [
-    "InGameHudMixin"
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

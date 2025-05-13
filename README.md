@@ -2,6 +2,10 @@
 
 ### Content
 
+what if I make fattycraft but it's super wholesome, SIMPLE no need for dialogue or advanced behaviour
+
+girl houses
+
 - women characters with breasts (not horny bait)
   - custom sounds
   - breasts have custom texture
@@ -17,14 +21,11 @@
 - Sakura Miku (from _Vocaloid_)
 
 ### Planned
+
+- refactor to dairycultist.pixelgirls
+- belly girls
 - badass girls that spawn in the nether
 - senko having 3D ears and a big bushy tail
-- befriending women by giving them their favourite item
-  - "Follow me" / they follow you
-  - "Stick around this place" / they wander around, but never get too far from where you told them to stay. good for villages!
-- women who you've befriended can be told to do stuff (like the mod Touhou Little Maids, I need to figure out how to do a mouse GUI tho)
-- remove sus hurt sounds
-- make speech part of translation file
 
 ### Thanks to
 - [This women for making pain sounds and posting them online](https://freesound.org/people/MadamVicious/sounds/218190/)
