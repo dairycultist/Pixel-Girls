@@ -1,17 +1,14 @@
 # Pixel Girls [StationAPI]
 
-### Content
+### Features
 
-what if I make fattycraft but it's super wholesome, SIMPLE no need for dialogue or advanced behaviour
-
-girl houses
+what if I make fattycraft but it's super wholesome, SIMPLE no need for dialogue or advanced behaviour, just friends :3
 
 - women characters with breasts (not horny bait)
-  - custom sounds
   - breasts have custom texture
   - they don't despawn
 - women spawn naturally
-- you can talk with women (only possible in videogames)
+- click on a woman to make her follow you, click again to let her wander
 
 ### Women currently in the mod
 
@@ -22,13 +19,14 @@ girl houses
 
 ### Planned
 
-- refactor to dairycultist.pixelgirls
+- woman villages
+- custom sounds
+- refactor to dairycultist.pixelgirls or something
 - belly girls
 - badass girls that spawn in the nether
 - senko having 3D ears and a big bushy tail
 
 ### Thanks to
-- [This women for making pain sounds and posting them online](https://freesound.org/people/MadamVicious/sounds/218190/)
 - [the stationapi guide which was made by Dany](https://stationapi.wiki/)
 - [the code for Tropicraft for stationapi, which is opensource and also made by Dany](https://github.com/DanyGames2014/Tropicraft/tree/master/src/main/java/net/danygames2014/tropicraft/mixin/scalearmor)
 #### Skins

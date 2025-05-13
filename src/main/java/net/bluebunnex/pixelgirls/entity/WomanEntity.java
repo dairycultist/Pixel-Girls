@@ -79,6 +79,26 @@ public class WomanEntity extends AnimalEntity {
     public boolean interact(PlayerEntity player) {
         super.onPlayerInteraction(player);
 
+        //if (heldItem instanceof FoodItem) {
+//
+//    if (this.health >= this.maxHealth) {
+//
+//        dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayNotHungry(this.random, heldStack));
+//
+//    } else {
+//
+//        dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldStack));
+//
+//        this.heal(((FoodItem) heldItem).getHealthRestored());
+//
+//        for (int i = 0; i < 5; i++) {
+//            this.world.addParticle("heart", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
+//        }
+//
+//        player.inventory.removeStack(player.inventory.selectedSlot, 1);
+//    }
+//}
+
         this.setTarget(this.getTarget() == player ? null : player);
 
         //world.playSound(this, "pixelgirls:entity.woman.talk", 1.0F, 1.0F);
