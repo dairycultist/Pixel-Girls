@@ -30,7 +30,7 @@ public class OverworldChunkGeneratorMixin {
     @Inject(method = "decorate", at = @At("HEAD"))
     public void decorateMixin(ChunkSource source, int x, int z, CallbackInfo ci) {
 
-        if (random.nextInt(128) == 0) {
+        if (random.nextInt(32) == 0) {
 
             int blockX = x * 16;
             int blockZ = z * 16;
@@ -51,6 +51,14 @@ public class OverworldChunkGeneratorMixin {
     }
 
     @Unique
+    private boolean isPermeableSurfaceBlock(int blockX, int blockY, int blockZ) {
+
+        int blockId = world.getBlockId(blockX, blockY, blockZ);
+
+        return blockId == 0 || blockId == Block.LEAVES.id || blockId == Block.GRASS.id || blockId == Block.BROWN_MUSHROOM.id || blockId == Block.RED_MUSHROOM.id;
+    }
+
+    @Unique
     private void placeGravelPath(int x1, int z1, int x2, int z2) {
 
         for (int x = x1; x < x2; x++) {
@@ -67,20 +75,31 @@ public class OverworldChunkGeneratorMixin {
     @Unique
     private void attemptToPlaceHouse(int blockX, int blockZ, int direction, Biome biome) {
 
-        int blockY = world.getTopSolidBlockY(blockX, blockZ) - 1;
+        int blockY = world.getTopSolidBlockY(blockX, blockZ);
 
-        if (!(
-            isPermittedSurfaceBlock(blockX, blockY, blockZ) &&
-            isPermittedSurfaceBlock(blockX + 4, world.getTopSolidBlockY(blockX + 4, blockZ + 4) - 1, blockZ + 4)
-            ))
+        while (isPermeableSurfaceBlock(blockX, blockY, blockZ))
+            blockY--;
+
+        if (!isPermittedSurfaceBlock(blockX, blockY, blockZ))
             return;
 
-        int floorId, wallId, columnId, roofMeta;
+        int floorId, stairId, wallId, columnId, roofMeta;
 
         switch (biome.name) {
 
+            case "Ice Desert":
+            case "Tundra":
+            case "Taiga":
+                floorId = Block.COBBLESTONE.id;
+                stairId = Block.COBBLESTONE_STAIRS.id;
+                wallId = Block.BRICKS.id;
+                columnId = Block.LOG.id;
+                roofMeta = 0;
+                break;
+
             case "Desert":
                 floorId = Block.SANDSTONE.id;
+                stairId = Block.WOODEN_STAIRS.id;
                 wallId = Block.PLANKS.id;
                 columnId = Block.SANDSTONE.id;
                 roofMeta = 1;
@@ -88,6 +107,7 @@ public class OverworldChunkGeneratorMixin {
 
             default:
                 floorId = Block.COBBLESTONE.id;
+                stairId = Block.COBBLESTONE_STAIRS.id;
                 wallId = Block.PLANKS.id;
                 columnId = Block.LOG.id;
                 roofMeta = 3;
@@ -125,12 +145,52 @@ public class OverworldChunkGeneratorMixin {
         world.setBlock(blockX, blockY + 2, blockZ + 2, 0);
         world.setBlock(blockX + 2, blockY + 2, blockZ, 0);
 
-        // door
+        // door + air in front of door + potential stair
         switch (direction) {
-            case 0: world.setBlock(blockX + 2, blockY + 1,    blockZ,     0); break;
-            case 1: world.setBlock(blockX + 4, blockY + 1, blockZ + 2, 0); break;
-            case 2: world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0); break;
-            case 3: world.setBlock(blockX,        blockY + 1, blockZ + 2, 0); break;
+            case 0:
+                world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0);
+
+                world.setBlock(blockX + 2, blockY + 1, blockZ + 5, 0);
+                world.setBlock(blockX + 2, blockY + 2, blockZ + 5, 0);
+
+                if (world.getBlockId(blockX + 2, blockY, blockZ + 5) == 0) {
+                    world.setBlock(blockX + 2, blockY, blockZ + 5, stairId);
+                    world.setBlockMeta(blockX + 2, blockY, blockZ + 5, direction);
+                }
+                break;
+            case 1:
+                world.setBlock(blockX + 4, blockY + 1, blockZ + 2, 0);
+
+                world.setBlock(blockX + 5, blockY + 1, blockZ + 2, 0);
+                world.setBlock(blockX + 5, blockY + 2, blockZ + 2, 0);
+
+                if (world.getBlockId(blockX + 5, blockY, blockZ + 2) == 0) {
+                    world.setBlock(blockX + 5, blockY, blockZ + 2, stairId);
+                    world.setBlockMeta(blockX + 5, blockY, blockZ +2, direction);
+                }
+                break;
+            case 2:
+                world.setBlock(blockX + 2, blockY + 1,    blockZ,     0);
+
+                world.setBlock(blockX + 2, blockY + 1, blockZ - 1, 0);
+                world.setBlock(blockX + 2, blockY + 2, blockZ - 1, 0);
+
+                if (world.getBlockId(blockX + 2, blockY, blockZ - 1) == 0) {
+                    world.setBlock(blockX + 2, blockY, blockZ - 1, stairId);
+                    world.setBlockMeta(blockX + 2, blockY, blockZ - 1, direction);
+                }
+                break;
+            case 3:
+                world.setBlock(   blockX,     blockY + 1, blockZ + 2, 0);
+
+                world.setBlock(blockX - 1, blockY + 1, blockZ + 2, 0);
+                world.setBlock(blockX - 1, blockY + 2, blockZ + 2, 0);
+
+                if (world.getBlockId(blockX - 1, blockY, blockZ + 2) == 0) {
+                    world.setBlock(blockX - 1, blockY, blockZ + 2, stairId);
+                    world.setBlockMeta(blockX - 1, blockY, blockZ + 2, direction);
+                }
+                break;
         }
 
         // torches
