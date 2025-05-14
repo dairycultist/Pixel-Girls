@@ -2,13 +2,11 @@
 
 ### Features
 
-what if I make fattycraft but it's super wholesome, SIMPLE no need for dialogue or advanced behaviour, just friends :3
-
-- women characters with breasts (not horny bait)
-  - breasts have custom texture
-  - they don't despawn
-- women spawn naturally
-- click on a woman to make her follow you, click again to let her wander
+- Women have breasts w/ custom textures (super wholesome)
+- Women spawn naturally in villages or just around
+  - Villages have loot!
+  - Women don't despawn
+- Click on a woman to make her follow you, click again to let her wander
 
 ### Women currently in the mod
 
@@ -19,12 +17,13 @@ what if I make fattycraft but it's super wholesome, SIMPLE no need for dialogue 
 
 ### Planned
 
-- woman villages
+- SIMPLE no need for dialogue or advanced behaviour, just friends :3
 - custom sounds
-- refactor to dairycultist.pixelgirls or something
-- belly girls
+- refactor to `dairycultist.pixelgirls` or something
+- girls with bellies?!
 - badass girls that spawn in the nether
-- senko having 3D ears and a big bushy tail
+- Senko having 3D ears and a big bushy tail
+- Koishi having a wide brim on her hat
 
 ### Thanks to
 - [the stationapi guide which was made by Dany](https://stationapi.wiki/)
