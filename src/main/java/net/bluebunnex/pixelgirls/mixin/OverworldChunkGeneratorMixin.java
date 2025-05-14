@@ -3,7 +3,6 @@ package net.bluebunnex.pixelgirls.mixin;
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkSource;
 import net.minecraft.world.gen.chunk.OverworldChunkGenerator;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,13 +26,22 @@ public class OverworldChunkGeneratorMixin {
     @Inject(method = "decorate", at = @At("HEAD"))
     public void decorateMixin(ChunkSource source, int x, int z, CallbackInfo ci) {
 
-        if (random.nextInt(32) == 0) {
+        if (random.nextInt(128) == 0) {
 
-            int blockX = x * 16 + this.random.nextInt(16);
-            int blockZ = z * 16 + this.random.nextInt(16);
+            int blockX = x * 16;
+            int blockZ = z * 16;
 
-            attemptToPlaceHouse(blockX, blockZ);
+            for (int i = 0; i < 6; i++)
+                attemptToPlaceHouse(blockX + this.random.nextInt(40), blockZ + this.random.nextInt(40));
         }
+    }
+
+    @Unique
+    private boolean isPermittedSurfaceBlock(int blockX, int blockY, int blockZ) {
+
+        int blockId = world.getBlockId(blockX, blockY, blockZ);
+
+        return blockId == Block.GRASS_BLOCK.id || blockId == Block.SAND.id;
     }
 
     @Unique
@@ -41,8 +49,10 @@ public class OverworldChunkGeneratorMixin {
 
         int blockY = world.getTopSolidBlockY(blockX, blockZ) - 1;
 
-        if (world.getBlockId(blockX, blockY, blockZ) != Block.GRASS_BLOCK.id &&
-            world.getBlockId(blockX, blockY, blockZ) != Block.SAND.id)
+        if (!(
+            isPermittedSurfaceBlock(blockX, blockY, blockZ) &&
+            isPermittedSurfaceBlock(blockX + 4, world.getTopSolidBlockY(blockX + 4, blockZ + 4) - 1, blockZ + 4)
+            ))
             return;
 
         int floorId, wallId, columnId, roofMeta;
@@ -84,15 +94,22 @@ public class OverworldChunkGeneratorMixin {
             }
         }
 
-        // door/windows
+        // windows
         world.setBlock(blockX + 2, blockY + 2, blockZ + 4, 0);
         world.setBlock(blockX + 4, blockY + 2, blockZ + 2, 0);
         world.setBlock(blockX, blockY + 2, blockZ + 2, 0);
         world.setBlock(blockX + 2, blockY + 2, blockZ, 0);
 
-        world.setBlock(blockX + 2, blockY + 1, blockZ, 0);
+        // door
+        switch (random.nextInt(4)) {
+            case 0: world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0); break;
+            case 1: world.setBlock(blockX + 4, blockY + 1, blockZ + 2, 0); break;
+            case 2: world.setBlock(blockX, blockY + 1, blockZ + 2, 0); break;
+            case 3: world.setBlock(blockX + 2, blockY + 1, blockZ, 0); break;
+        }
 
-        // torch
+        // torches
+        world.setBlock(blockX + 2, blockY + 3, blockZ + 1, Block.TORCH.id);
         world.setBlock(blockX + 2, blockY + 3, blockZ + 3, Block.TORCH.id);
 
         // log supports
