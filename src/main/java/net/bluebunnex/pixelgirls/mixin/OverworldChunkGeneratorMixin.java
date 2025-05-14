@@ -31,8 +31,8 @@ public class OverworldChunkGeneratorMixin {
             int blockX = x * 16;
             int blockZ = z * 16;
 
-            for (int i = 0; i < 6; i++)
-                attemptToPlaceHouse(blockX + this.random.nextInt(40), blockZ + this.random.nextInt(40));
+            for (int i = 0; i < 5; i++)
+                attemptToPlaceHouse(blockX + this.random.nextInt(32), blockZ + this.random.nextInt(32));
         }
     }
 
@@ -75,22 +75,27 @@ public class OverworldChunkGeneratorMixin {
         }
 
         // floor and ceiling
-        for (int xo = 0; xo < 5; xo++) {
-            for (int zo = 0; zo < 5; zo++) {
+        for (int x = blockX; x < blockX + 5; x++) {
+            for (int z = blockZ; z < blockZ + 5; z++) {
 
-                world.setBlock(blockX + xo, blockY, blockZ + zo, floorId);
-                world.setBlock(blockX + xo, blockY + 4, blockZ + zo, wallId);
+                world.setBlock(x, blockY, z, floorId);
+                world.setBlock(x, blockY + 4, z, wallId);
 
-                world.setBlock(blockX + xo, blockY + 5, blockZ + zo, Block.SLAB.id);
-                world.setBlockMeta(blockX + xo, blockY + 5, blockZ + zo, roofMeta);
+                world.setBlock(x, blockY + 5, z, Block.SLAB.id);
+                world.setBlockMeta(x, blockY + 5, z, roofMeta);
 
                 // walls
-                if (xo == 0 || zo == 0 || xo == 4 || zo == 4)
+                if (x == blockX || z == blockZ || x == blockX + 4 || z == blockZ + 4)
                     for (int yo = 1; yo < 4; yo++)
-                        world.setBlock(blockX + xo, blockY + yo, blockZ + zo, wallId);
+                        world.setBlock(x, blockY + yo, z, wallId);
                 else
                     for (int yo = 1; yo < 4; yo++)
-                        world.setBlock(blockX + xo, blockY + yo, blockZ + zo, 0);
+                        world.setBlock(x, blockY + yo, z, 0);
+
+                // foundation
+                for (int yo = -2; yo < 0; yo++)
+                    if (world.getBlockId(x, blockY + yo, z) == 0)
+                        world.setBlock(x, blockY + yo, z, floorId);
             }
         }
 
