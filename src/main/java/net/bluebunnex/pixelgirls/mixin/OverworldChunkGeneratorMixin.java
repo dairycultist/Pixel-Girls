@@ -57,7 +57,7 @@ public class OverworldChunkGeneratorMixin {
 
         int blockId = world.getBlockId(blockX, blockY, blockZ);
 
-        return blockId == 0 || blockId == Block.LEAVES.id || blockId == Block.GRASS.id || blockId == Block.BROWN_MUSHROOM.id || blockId == Block.RED_MUSHROOM.id;
+        return blockId == 0 || blockId == Block.LEAVES.id || blockId == Block.GRASS.id || blockId == Block.BROWN_MUSHROOM.id || blockId == Block.RED_MUSHROOM.id  || blockId == Block.SNOW.id;
     }
 
     @Unique

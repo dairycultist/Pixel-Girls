@@ -31,13 +31,13 @@ public class WomanEntity extends AnimalEntity {
                 this.name = "Senko";
                 break;
             case 1:
-                this.name = "Koishi"; // TODO update boob texture
+                this.name = "Koishi";
                 break;
             case 2:
                 this.name = "Miku";
                 break;
             case 3:
-                this.name = "Sakura Miku"; // TODO update boob texture
+                this.name = "Sakura Miku";
                 break;
         }
 
@@ -59,9 +59,9 @@ public class WomanEntity extends AnimalEntity {
 
                 this.lookAt(this.getTarget(), 45f, 999f); // pitch and yaw are backwards
 
-            } else { // have a target (that is far away), only continue targeting if we can see them
+            } else { // have a target (that is far away)
 
-                if (!this.canSee(this.getTarget()))
+                if (this.getDistance(this.getTarget()) > 32f)
                     this.setTarget(null);
             }
         }
@@ -138,7 +138,7 @@ public class WomanEntity extends AnimalEntity {
     }
 
     @Override
-    protected String getHurtSound() {
+    protected String getHurtSound() { // resources/assets/pixelgirls/stationapi/sounds/sound/entity/woman
         return "mob.chickenhurt"; // "pixelgirls:entity.woman.hurt" // hurt(1-3).ogg
     }
 
