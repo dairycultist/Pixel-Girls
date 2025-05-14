@@ -3,6 +3,7 @@ package net.bluebunnex.pixelgirls.mixin;
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkSource;
 import net.minecraft.world.gen.chunk.OverworldChunkGenerator;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,13 +27,20 @@ public class OverworldChunkGeneratorMixin {
     @Inject(method = "decorate", at = @At("HEAD"))
     public void decorateMixin(ChunkSource source, int x, int z, CallbackInfo ci) {
 
-        if (random.nextInt(128) == 0) {
+        if (random.nextInt(16) == 0) {
 
             int blockX = x * 16;
             int blockZ = z * 16;
 
-            for (int i = 0; i < 5; i++)
-                attemptToPlaceHouse(blockX + this.random.nextInt(32), blockZ + this.random.nextInt(32));
+            Biome biome = this.world.method_1781().getBiome(blockX, blockZ);
+
+            if (biome == Biome.PLAINS || biome == Biome.DESERT || biome == Biome.SAVANNA) {
+
+                attemptToPlaceHouse(blockX, blockZ, 1, biome);
+                attemptToPlaceHouse(blockX + 20, blockZ, 3, biome);
+
+                placeGravelPath(blockX, blockZ + 1, blockX + 20, blockZ + 4);
+            }
         }
     }
 
@@ -45,7 +53,21 @@ public class OverworldChunkGeneratorMixin {
     }
 
     @Unique
-    private void attemptToPlaceHouse(int blockX, int blockZ) {
+    private void placeGravelPath(int x1, int z1, int x2, int z2) {
+
+        for (int x = x1; x < x2; x++) {
+            for (int z = z1; z < z2; z++) {
+
+                int y = world.getTopSolidBlockY(x, z) - 1;
+
+                if (isPermittedSurfaceBlock(x, y, z))
+                    world.setBlock(x, y, z, Block.GRAVEL.id);
+            }
+        }
+    }
+
+    @Unique
+    private void attemptToPlaceHouse(int blockX, int blockZ, int direction, Biome biome) {
 
         int blockY = world.getTopSolidBlockY(blockX, blockZ) - 1;
 
@@ -57,7 +79,7 @@ public class OverworldChunkGeneratorMixin {
 
         int floorId, wallId, columnId, roofMeta;
 
-        switch (this.world.method_1781().getBiome(blockX, blockZ).name) {
+        switch (biome.name) {
 
             case "Desert":
                 floorId = Block.SANDSTONE.id;
@@ -86,16 +108,16 @@ public class OverworldChunkGeneratorMixin {
 
                 // walls
                 if (x == blockX || z == blockZ || x == blockX + 4 || z == blockZ + 4)
-                    for (int yo = 1; yo < 4; yo++)
-                        world.setBlock(x, blockY + yo, z, wallId);
+                    for (int y = blockY + 1; y < blockY + 4; y++)
+                        world.setBlock(x, y, z, wallId);
                 else
-                    for (int yo = 1; yo < 4; yo++)
-                        world.setBlock(x, blockY + yo, z, 0);
+                    for (int y = blockY + 1; y < blockY + 4; y++)
+                        world.setBlock(x, y, z, 0);
 
                 // foundation
-                for (int yo = -2; yo < 0; yo++)
-                    if (world.getBlockId(x, blockY + yo, z) == 0)
-                        world.setBlock(x, blockY + yo, z, floorId);
+                for (int y = blockY - 6; y < blockY; y++)
+                    if (world.getBlockId(x, y, z) == 0)
+                        world.setBlock(x, y, z, floorId);
             }
         }
 
@@ -106,11 +128,11 @@ public class OverworldChunkGeneratorMixin {
         world.setBlock(blockX + 2, blockY + 2, blockZ, 0);
 
         // door
-        switch (random.nextInt(4)) {
-            case 0: world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0); break;
+        switch (direction) {
+            case 0: world.setBlock(blockX + 2, blockY + 1,    blockZ,     0); break;
             case 1: world.setBlock(blockX + 4, blockY + 1, blockZ + 2, 0); break;
-            case 2: world.setBlock(blockX, blockY + 1, blockZ + 2, 0); break;
-            case 3: world.setBlock(blockX + 2, blockY + 1, blockZ, 0); break;
+            case 2: world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0); break;
+            case 3: world.setBlock(blockX,        blockY + 1, blockZ + 2, 0); break;
         }
 
         // torches
