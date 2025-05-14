@@ -2,6 +2,9 @@ package net.bluebunnex.pixelgirls.mixin;
 
 import net.bluebunnex.pixelgirls.entity.WomanEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkSource;
@@ -27,20 +30,15 @@ public class OverworldChunkGeneratorMixin {
     @Inject(method = "decorate", at = @At("HEAD"))
     public void decorateMixin(ChunkSource source, int x, int z, CallbackInfo ci) {
 
-        if (random.nextInt(16) == 0) {
+        if (random.nextInt(128) == 0) {
 
             int blockX = x * 16;
             int blockZ = z * 16;
 
             Biome biome = this.world.method_1781().getBiome(blockX, blockZ);
 
-            if (biome == Biome.PLAINS || biome == Biome.DESERT || biome == Biome.SAVANNA) {
-
-                attemptToPlaceHouse(blockX, blockZ, 1, biome);
-                attemptToPlaceHouse(blockX + 20, blockZ, 3, biome);
-
-                placeGravelPath(blockX, blockZ + 1, blockX + 20, blockZ + 4);
-            }
+            for (int i = 0; i < 6; i++)
+                attemptToPlaceHouse(blockX + random.nextInt(16) * 2, blockZ + random.nextInt(16) * 2, random.nextInt(4), biome);
         }
     }
 
@@ -148,8 +146,32 @@ public class OverworldChunkGeneratorMixin {
             world.setBlock(blockX, blockY + yo, blockZ + 4, columnId);
         }
 
+        // woman
         WomanEntity resident = new WomanEntity(world);
         resident.setPosition(blockX + 2, blockY + 1, blockZ + 2);
         world.spawnEntity(resident);
+
+        // chest
+        if (random.nextBoolean()) {
+
+            world.setBlock(blockX + 1, blockY + 1, blockZ + 1, Block.CHEST.id);
+            ChestBlockEntity chest = (ChestBlockEntity) world.getBlockEntity(blockX + 1, blockY + 1, blockZ + 1);
+
+            for (int i = 0; i < 8; i++) {
+
+                ItemStack stack = this.getRandomChestItem();
+                chest.setStack(random.nextInt(chest.size()), stack);
+            }
+        }
+    }
+
+    @Unique
+    private ItemStack getRandomChestItem() {
+
+        return switch (random.nextInt(3)) {
+            case 0 -> new ItemStack(Item.WHEAT, random.nextInt(3, 8));
+            case 1 -> new ItemStack(Item.BREAD, 1);
+            default -> random.nextInt(50) == 0 ? new ItemStack(Item.GOLDEN_APPLE, 1) : new ItemStack(Item.APPLE, 1);
+        };
     }
 }
