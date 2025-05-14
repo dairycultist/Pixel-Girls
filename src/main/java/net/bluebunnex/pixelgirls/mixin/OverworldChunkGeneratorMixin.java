@@ -37,8 +37,10 @@ public class OverworldChunkGeneratorMixin {
 
             Biome biome = this.world.method_1781().getBiome(blockX, blockZ);
 
+            attemptToPlaceWell(blockX + 16, blockZ + 16, biome);
+
             for (int i = 0; i < 6; i++)
-                attemptToPlaceHouse(blockX + random.nextInt(16) * 2, blockZ + random.nextInt(16) * 2, random.nextInt(4), biome);
+                attemptToPlaceHouse(blockX + random.nextInt(16) * 2, blockZ + random.nextInt(16) * 2, biome, random.nextInt(4));
         }
     }
 
@@ -59,6 +61,17 @@ public class OverworldChunkGeneratorMixin {
     }
 
     @Unique
+    private int topY(int blockX, int blockZ) {
+
+        int blockY = world.getTopSolidBlockY(blockX, blockZ);
+
+        while (isPermeableSurfaceBlock(blockX, blockY, blockZ))
+            blockY--;
+
+        return blockY;
+    }
+
+    @Unique
     private void placeGravelPath(int x1, int z1, int x2, int z2) {
 
         for (int x = x1; x < x2; x++) {
@@ -73,12 +86,40 @@ public class OverworldChunkGeneratorMixin {
     }
 
     @Unique
-    private void attemptToPlaceHouse(int blockX, int blockZ, int direction, Biome biome) {
+    private void attemptToPlaceWell(int blockX, int blockZ, Biome biome) {
 
-        int blockY = world.getTopSolidBlockY(blockX, blockZ);
+        int blockY = topY(blockX, blockZ) + 1;
 
-        while (isPermeableSurfaceBlock(blockX, blockY, blockZ))
-            blockY--;
+        int block = biome == Biome.DESERT ? Block.SANDSTONE.id : Block.COBBLESTONE.id;
+
+        for (int x = blockX - 1; x < blockX + 2; x++) {
+            for (int z = blockZ - 1; z < blockZ + 2; z++) {
+
+                if (x == blockX && z == blockZ)
+                    for (int y = blockY - 10; y <= blockY; y++)
+                        world.setBlock(x, y, z, Block.WATER.id);
+                else
+                    for (int y = blockY - 10; y <= blockY; y++)
+                        world.setBlock(x, y, z, block);
+            }
+        }
+
+        if (random.nextBoolean()) {
+
+            world.setBlock(blockX, blockY - 10, blockZ, Block.CHEST.id);
+            ChestBlockEntity chest = (ChestBlockEntity) world.getBlockEntity(blockX, blockY - 10, blockZ);
+
+            for (int i = 0; i < random.nextInt(1, 4); i++) {
+
+                chest.setStack(random.nextInt(chest.size()), new ItemStack(Item.DIAMOND, random.nextInt(1, 3)));
+            }
+        }
+    }
+
+    @Unique
+    private void attemptToPlaceHouse(int blockX, int blockZ, Biome biome, int direction) {
+
+        int blockY = topY(blockX, blockZ);
 
         if (!isPermittedSurfaceBlock(blockX, blockY, blockZ))
             return;
@@ -148,14 +189,14 @@ public class OverworldChunkGeneratorMixin {
         // door + air in front of door + potential stair
         switch (direction) {
             case 0:
-                world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0);
+                world.setBlock(   blockX,     blockY + 1, blockZ + 2, 0);
 
-                world.setBlock(blockX + 2, blockY + 1, blockZ + 5, 0);
-                world.setBlock(blockX + 2, blockY + 2, blockZ + 5, 0);
+                world.setBlock(blockX - 1, blockY + 1, blockZ + 2, 0);
+                world.setBlock(blockX - 1, blockY + 2, blockZ + 2, 0);
 
-                if (world.getBlockId(blockX + 2, blockY, blockZ + 5) == 0) {
-                    world.setBlock(blockX + 2, blockY, blockZ + 5, stairId);
-                    world.setBlockMeta(blockX + 2, blockY, blockZ + 5, direction);
+                if (world.getBlockId(blockX - 1, blockY, blockZ + 2) == 0) {
+                    world.setBlock(blockX - 1, blockY, blockZ + 2, stairId);
+                    world.setBlockMeta(blockX - 1, blockY, blockZ + 2, direction);
                 }
                 break;
             case 1:
@@ -181,14 +222,14 @@ public class OverworldChunkGeneratorMixin {
                 }
                 break;
             case 3:
-                world.setBlock(   blockX,     blockY + 1, blockZ + 2, 0);
+                world.setBlock(blockX + 2, blockY + 1, blockZ + 4, 0);
 
-                world.setBlock(blockX - 1, blockY + 1, blockZ + 2, 0);
-                world.setBlock(blockX - 1, blockY + 2, blockZ + 2, 0);
+                world.setBlock(blockX + 2, blockY + 1, blockZ + 5, 0);
+                world.setBlock(blockX + 2, blockY + 2, blockZ + 5, 0);
 
-                if (world.getBlockId(blockX - 1, blockY, blockZ + 2) == 0) {
-                    world.setBlock(blockX - 1, blockY, blockZ + 2, stairId);
-                    world.setBlockMeta(blockX - 1, blockY, blockZ + 2, direction);
+                if (world.getBlockId(blockX + 2, blockY, blockZ + 5) == 0) {
+                    world.setBlock(blockX + 2, blockY, blockZ + 5, stairId);
+                    world.setBlockMeta(blockX + 2, blockY, blockZ + 5, direction);
                 }
                 break;
         }
