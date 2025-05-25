@@ -1,12 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.bluebunnex.pixelgirls.mixin",
+  "package": "net.dairycultist.pixelgirls.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "BiomeMixin",
-    "OverworldChunkGeneratorMixin"
-  ],
+  "mixins": [],
   "server": [],
   "client": [],
   "injectors": {

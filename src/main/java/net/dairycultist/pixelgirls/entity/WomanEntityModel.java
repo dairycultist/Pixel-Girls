@@ -1,4 +1,4 @@
-package net.bluebunnex.pixelgirls.entity;
+package net.dairycultist.pixelgirls.entity;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;

@@ -2,14 +2,16 @@
   "schemaVersion": 1,
   "id": "pixelgirls",
   "version": "${version}",
-  "name": "Pixel Girls (Girlfriend Mod)",
-  "description": "Weddable women to make your world less lonely!",
-  "authors": [ "BlueBunnex" ],
+  "name": "Pixel Girls",
+  "description": "Women to make your world less lonely!",
+  "authors": [ "dairycultist" ],
   "license": "MIT",
   "icon": "assets/pixelgirls/icon.png",
   "environment": "*",
   "entrypoints": {
-    "stationapi:event_bus": [ "net.bluebunnex.pixelgirls.PixelGirls" ],
+    "stationapi:event_bus": [
+      "net.dairycultist.pixelgirls.PixelGirls"
+    ],
     "stationapi:event_bus_client": [],
     "stationapi:event_bus_server": []
   },

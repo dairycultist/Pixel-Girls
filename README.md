@@ -2,10 +2,10 @@
 
 ### Features
 
+JENNY https://minecraft.novaskin.me/post/6008203030/jenny
+
 - Women have breasts w/ custom textures (super wholesome)
-- Women spawn naturally in villages or just around
-  - Villages have loot!
-  - Women don't despawn
+- Women don't despawn
 - Click on a woman to make her follow you, click again to let her wander
 
 ### Women currently in the mod
@@ -17,9 +17,10 @@
 
 ### Planned
 
+- Lucky blocks that you break to spawn a random girl
+  - Different lucky blocks have different girls
 - SIMPLE no need for dialogue or advanced behaviour, just friends :3
 - custom sounds
-- refactor to `dairycultist.pixelgirls` or something
 - girls with bellies?!
 - badass girls that spawn in the nether
 - Senko having 3D ears and a big bushy tail

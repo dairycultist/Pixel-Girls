@@ -1,15 +1,12 @@
-package net.bluebunnex.pixelgirls;
+package net.dairycultist.pixelgirls;
 
-import net.bluebunnex.pixelgirls.entity.WomanEntity;
-import net.bluebunnex.pixelgirls.entity.WomanEntityModel;
+import net.dairycultist.pixelgirls.entity.WomanEntity;
+import net.dairycultist.pixelgirls.entity.WomanEntityModel;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.item.Item;
 import net.modificationstation.stationapi.api.client.event.render.entity.EntityRendererRegisterEvent;
 import net.modificationstation.stationapi.api.event.entity.EntityRegister;
-import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
-import net.modificationstation.stationapi.api.template.item.TemplateItem;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;
 
