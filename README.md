@@ -2,8 +2,6 @@
 
 ### Features
 
-JENNY https://minecraft.novaskin.me/post/6008203030/jenny
-
 - Lucky blocks that you break to spawn a random girl
   - Different lucky blocks have different girls
 - Women have breasts w/ custom textures (super wholesome)
@@ -17,7 +15,12 @@ JENNY https://minecraft.novaskin.me/post/6008203030/jenny
 - Koishi (from _Touhou Project_) ([skin base](https://www.planetminecraft.com/skin/koishi-komeiji-brambly-rose-garden/))
 - Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/717b6544a421153e))
 - Sakura Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/01a81d090e883142))
+
+### Women to add
+
+- Jenny (Jenny mod) ([skin base](https://minecraft.novaskin.me/post/6008203030/jenny))
 - Fiora (indescript) ([skin base](https://www.minecraftskins.com/skin/23237466/fire-girl/))
+- Angelo (indescript) ([skin base](https://www.minecraftskins.com/skin/23161094/lucaa-dragon-girl/))
 
 ### Planned
 
