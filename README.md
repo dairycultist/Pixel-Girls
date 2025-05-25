@@ -4,6 +4,8 @@
 
 JENNY https://minecraft.novaskin.me/post/6008203030/jenny
 
+- Lucky blocks that you break to spawn a random girl
+  - Different lucky blocks have different girls
 - Women have breasts w/ custom textures (super wholesome)
 - Women don't despawn
 - Click on a woman to make her follow you, click again to let her wander
@@ -17,12 +19,10 @@ JENNY https://minecraft.novaskin.me/post/6008203030/jenny
 
 ### Planned
 
-- Lucky blocks that you break to spawn a random girl
-  - Different lucky blocks have different girls
 - SIMPLE no need for dialogue or advanced behaviour, just friends :3
 - custom sounds
 - girls with bellies?!
-- badass girls that spawn in the nether
+- badass girls that spawn via Nether Lucky Block
 - Senko having 3D ears and a big bushy tail
 - Koishi having a wide brim on her hat
 
