@@ -8,40 +8,44 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    private int variant;
+    public enum VariantPool {
+
+        COMMON(new String[] { "Senko", "Koishi", "Miku" }),
+        RARE(new String[] { "Sakura Miku" });
+
+        public final String[] names;
+
+        VariantPool(String[] names) { this.names = names; }
+    }
+
+    private int variantID;
     public String name;
 
     public WomanEntity(World world) {
+        this(world, VariantPool.COMMON);
+    }
+
+    public WomanEntity(World world, VariantPool variantPool) {
         super(world);
 
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant(this.random.nextInt(0, 4));
+        this.setVariant(
+                this.random.nextInt(0, variantPool.names.length)
+                + variantPool.ordinal() * 100
+        );
     }
 
-    public void setVariant(int variant) {
+    public void setVariant(int variantID) {
 
-        this.variant = variant;
+        this.variantID = variantID;
+        this.name = VariantPool.values()[variantID / 100].names[variantID % 100];
 
-        switch (this.variant) {
-
-            default:
-            case 0:
-                this.name = "Senko";
-                break;
-            case 1:
-                this.name = "Koishi";
-                break;
-            case 2:
-                this.name = "Miku";
-                break;
-            case 3:
-                this.name = "Sakura Miku";
-                break;
-        }
-
-        this.texture = "/assets/pixelgirls/stationapi/textures/entity/" + this.name.toLowerCase().replace(' ', '_') + ".png";
+        this.texture =
+                "/assets/pixelgirls/stationapi/textures/entity/"
+                + this.name.toLowerCase().replace(' ', '_')
+                + ".png";
     }
 
     @Override
@@ -121,15 +125,15 @@ public class WomanEntity extends AnimalEntity {
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
-        nbt.putInt("Variant", this.variant);
+        nbt.putInt("VariantID", this.variantID);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
 
-        if (nbt.contains("Variant"))
-            this.setVariant(nbt.getInt("Variant"));
+        if (nbt.contains("VariantID"))
+            this.setVariant(nbt.getInt("VariantID"));
     }
 
     @Override
@@ -138,8 +142,10 @@ public class WomanEntity extends AnimalEntity {
     }
 
     @Override
-    protected String getHurtSound() { // resources/assets/pixelgirls/stationapi/sounds/sound/entity/woman
-        return "mob.chickenhurt"; // "pixelgirls:entity.woman.hurt" // hurt(1-3).ogg
+    protected String getHurtSound() {
+        // resources/assets/pixelgirls/stationapi/sounds/sound/entity/woman
+        // "pixelgirls:entity.woman.hurt" // hurt(1-3).ogg
+        return "mob.chickenhurt";
     }
 
     @Override

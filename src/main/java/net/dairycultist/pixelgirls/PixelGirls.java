@@ -41,7 +41,7 @@ public class PixelGirls {
 
             public void onBreak(World world, int x, int y, int z) {
 
-                Entity e = new WomanEntity(world);
+                Entity e = new WomanEntity(world, WomanEntity.VariantPool.COMMON);
                 e.setPosition(x + 0.5, y, z + 0.5);
                 world.spawnEntity(e);
             }
