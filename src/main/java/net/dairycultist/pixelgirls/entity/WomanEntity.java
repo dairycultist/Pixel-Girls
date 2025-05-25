@@ -12,9 +12,9 @@ public class WomanEntity extends AnimalEntity {
 
     public enum VariantPool {
 
-        COMMON(new String[] { "Senko", "Miku" }),
-        RARE(new String[] { "Sakura Miku" }),
-        NETHER(new String[] { "Koishi" });
+        PLAINS(new String[] { "Miku", "Koishi", "Sakura Miku" }),
+        DESERT(new String[] { "Senko" }),
+        NETHER(new String[] { "Fiora" });
 
         public final String[] names;
 

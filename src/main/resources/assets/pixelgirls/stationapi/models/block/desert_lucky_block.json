@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "pixelgirls:block/desert_lucky_block"
+  }
+}

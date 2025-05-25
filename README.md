@@ -17,6 +17,7 @@ JENNY https://minecraft.novaskin.me/post/6008203030/jenny
 - Koishi (from _Touhou Project_) ([skin base](https://www.planetminecraft.com/skin/koishi-komeiji-brambly-rose-garden/))
 - Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/717b6544a421153e))
 - Sakura Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/01a81d090e883142))
+- Fiora (indescript) ([skin base](https://www.minecraftskins.com/skin/23237466/fire-girl/))
 
 ### Planned
 

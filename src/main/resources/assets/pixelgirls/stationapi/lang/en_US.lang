@@ -1,1 +1,3 @@
-tile.@.common_lucky_block.name=Common Lucky Block
+tile.@.plains_lucky_block.name=Plains Lucky Block
+tile.@.desert_lucky_block.name=Desert Lucky Block
+tile.@.nether_lucky_block.name=Nether Lucky Block
