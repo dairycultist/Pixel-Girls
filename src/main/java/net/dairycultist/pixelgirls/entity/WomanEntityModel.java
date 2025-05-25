@@ -15,6 +15,10 @@ public class WomanEntityModel extends BipedEntityModel {
         this.breasts.addCuboid(0f, 0f, -4f, 8, 4, 4); // position relative to pivot
         this.breasts.setPivot(-4f, 1f, -2f); // pivot (global space)
         this.breasts.pitch = (float) (Math.PI / 8);
+
+        // bigger
+        // this.breasts.addCuboid(0f, 0f, -5f, 10, 5, 5); // position relative to pivot
+        // this.breasts.setPivot(-5f, 1f, -2f); // pivot (global space)
     }
 
     // override cuz we don't want to render the hat
@@ -31,6 +35,4 @@ public class WomanEntityModel extends BipedEntityModel {
         this.leftLeg.render(scale);
         this.breasts.render(scale);
     }
-
-    // TODO override setAngles to do custom animation
 }

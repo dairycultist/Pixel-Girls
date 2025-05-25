@@ -3,6 +3,8 @@ package net.dairycultist.pixelgirls.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FoodItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
@@ -10,8 +12,9 @@ public class WomanEntity extends AnimalEntity {
 
     public enum VariantPool {
 
-        COMMON(new String[] { "Senko", "Koishi", "Miku" }),
-        RARE(new String[] { "Sakura Miku" });
+        COMMON(new String[] { "Senko", "Miku" }),
+        RARE(new String[] { "Sakura Miku" }),
+        NETHER(new String[] { "Koishi" });
 
         public final String[] names;
 
@@ -22,7 +25,7 @@ public class WomanEntity extends AnimalEntity {
     public String name;
 
     public WomanEntity(World world) {
-        this(world, VariantPool.COMMON);
+        this(world, VariantPool.values()[(int) (Math.random() * VariantPool.values().length)]);
     }
 
     public WomanEntity(World world, VariantPool variantPool) {
@@ -83,27 +86,25 @@ public class WomanEntity extends AnimalEntity {
     public boolean interact(PlayerEntity player) {
         super.onPlayerInteraction(player);
 
-        //if (heldItem instanceof FoodItem) {
-//
-//    if (this.health >= this.maxHealth) {
-//
-//        dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayNotHungry(this.random, heldStack));
-//
-//    } else {
-//
-//        dialogueContainer.pixel_girls$pushDialogue(this.name, this.mind.sayEat(this.random, heldStack));
-//
-//        this.heal(((FoodItem) heldItem).getHealthRestored());
-//
-//        for (int i = 0; i < 5; i++) {
-//            this.world.addParticle("heart", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
-//        }
-//
-//        player.inventory.removeStack(player.inventory.selectedSlot, 1);
-//    }
-//}
+        ItemStack heldStack = player.getHand();
 
-        this.setTarget(this.getTarget() == player ? null : player);
+        if (heldStack != null && heldStack.getItem() instanceof FoodItem food) {
+
+            this.heal(food.getHealthRestored());
+
+            if (this.health >= this.maxHealth) {
+                for (int i = 0; i < 5; i++)
+                    this.world.addParticle("heart", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
+            } else {
+                for (int i = 0; i < 5; i++)
+                    this.world.addParticle("smoke", this.x + Math.random() * 2 - 1, this.y + Math.random() + 0.5, this.z + Math.random() * 2 - 1, 0, 0, 0);
+            }
+
+            player.inventory.removeStack(player.inventory.selectedSlot, 1);
+
+        } else {
+            this.setTarget(this.getTarget() == player ? null : player);
+        }
 
         //world.playSound(this, "pixelgirls:entity.woman.talk", 1.0F, 1.0F);
         player.swingHand();

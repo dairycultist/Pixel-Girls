@@ -9,6 +9,7 @@ JENNY https://minecraft.novaskin.me/post/6008203030/jenny
 - Women have breasts w/ custom textures (super wholesome)
 - Women don't despawn
 - Click on a woman to make her follow you, click again to let her wander
+- Click on a woman with a food item to heal her (emits hearts once completely healed, otherwise smoke)
 
 ### Women currently in the mod
 
