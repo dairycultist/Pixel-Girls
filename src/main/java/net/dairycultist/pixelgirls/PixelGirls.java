@@ -21,19 +21,17 @@ public class PixelGirls {
     @Entrypoint.Namespace
     public static final Namespace NAMESPACE = Null.get();
 
-    public static Block PLAINS_LUCKY_BLOCK;
+    public static Block OVERWORLD_CRATE;
+    public static Block NETHER_CRATE;
 
     @EventListener
     public void registerBlocks(BlockRegistryEvent event) {
 
-        PLAINS_LUCKY_BLOCK = new LuckyBlock(NAMESPACE.id("plains_lucky_block"), WomanEntity.VariantPool.PLAINS)
-        .setTranslationKey(NAMESPACE, "plains_lucky_block");
+        OVERWORLD_CRATE = new WomanCrate(NAMESPACE.id("overworld_crate"), WomanEntity.VariantPool.OVERWORLD)
+        .setTranslationKey(NAMESPACE, "overworld_crate");
 
-        PLAINS_LUCKY_BLOCK = new LuckyBlock(NAMESPACE.id("desert_lucky_block"), WomanEntity.VariantPool.DESERT)
-                .setTranslationKey(NAMESPACE, "desert_lucky_block");
-
-        PLAINS_LUCKY_BLOCK = new LuckyBlock(NAMESPACE.id("nether_lucky_block"), WomanEntity.VariantPool.NETHER)
-                .setTranslationKey(NAMESPACE, "nether_lucky_block");
+        NETHER_CRATE = new WomanCrate(NAMESPACE.id("nether_crate"), WomanEntity.VariantPool.NETHER)
+                .setTranslationKey(NAMESPACE, "nether_crate");
     }
 
     @EventListener

@@ -9,11 +9,11 @@ import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.Random;
 
-public class LuckyBlock extends TemplateBlock {
+public class WomanCrate extends TemplateBlock {
 
     private final WomanEntity.VariantPool variantPool;
 
-    public LuckyBlock(Identifier identifier, WomanEntity.VariantPool variantPool) {
+    public WomanCrate(Identifier identifier, WomanEntity.VariantPool variantPool) {
         super(identifier, Material.WOOD);
 
         this.setHardness(0.8F);

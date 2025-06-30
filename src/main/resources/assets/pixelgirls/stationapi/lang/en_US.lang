@@ -1,3 +1,2 @@
-tile.@.plains_lucky_block.name=Plains Lucky Block
-tile.@.desert_lucky_block.name=Desert Lucky Block
-tile.@.nether_lucky_block.name=Nether Lucky Block
+tile.@.overworld_crate.name=Overworld Crate
+tile.@.nether_crate.name=Nether Crate

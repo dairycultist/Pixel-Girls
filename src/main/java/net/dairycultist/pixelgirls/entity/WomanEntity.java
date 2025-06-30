@@ -12,8 +12,7 @@ public class WomanEntity extends AnimalEntity {
 
     public enum VariantPool {
 
-        PLAINS(new String[] { "Miku", "Koishi", "Sakura Miku" }),
-        DESERT(new String[] { "Senko" }),
+        OVERWORLD(new String[] { "Miku", "Koishi", "Sakura Miku", "Senko" }),
         NETHER(new String[] { "Fiora" });
 
         public final String[] names;

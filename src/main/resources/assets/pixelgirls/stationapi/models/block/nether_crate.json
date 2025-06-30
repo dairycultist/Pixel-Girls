@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "pixelgirls:block/desert_lucky_block"
+    "all": "pixelgirls:block/nether_crate"
   }
 }
