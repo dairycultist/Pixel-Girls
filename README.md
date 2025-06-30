@@ -28,8 +28,9 @@
 - custom sounds
 - girls with bellies?!
 - badass girls that spawn via Nether Lucky Block
-- Senko having 3D ears and a big bushy tail
-- Koishi having a wide brim on her hat
+- Custom LivingEntityRenderer
+  - Senko having 3D ears and a big bushy tail
+  - Koishi having a wide brim on her hat
 
 ### Thanks to
 - [the stationapi guide which was made by Dany](https://stationapi.wiki/)
