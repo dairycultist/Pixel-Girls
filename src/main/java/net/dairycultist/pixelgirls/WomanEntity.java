@@ -127,18 +127,18 @@ public class WomanEntity extends AnimalEntity {
 
     @Override
     protected String getRandomSound() {
-        return null;
+        return variant.randomSound;
     }
 
     @Override
     protected String getHurtSound() {
         // resources/assets/pixelgirls/stationapi/sounds/sound/entity/woman
         // "pixelgirls:entity.woman.hurt" // hurt(1-3).ogg
-        return "mob.chickenhurt";
+        return variant.hurtSound;
     }
 
     @Override
     protected String getDeathSound() {
-        return "mob.chickenhurt";
+        return variant.deathSound;
     }
 }

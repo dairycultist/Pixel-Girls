@@ -21,6 +21,7 @@
 - Jenny (Jenny mod) ([skin base](https://minecraft.novaskin.me/post/6008203030/jenny))
 - Fiora (indescript) ([skin base](https://www.minecraftskins.com/skin/23237466/fire-girl/))
 - Angelo (indescript) ([skin base](https://www.minecraftskins.com/skin/23161094/lucaa-dragon-girl/))
+- Uzaki (should be shortstack) ([skin base](https://www.minecraftskins.com/skin/15001916/uzaki-hana/))
 
 ### Planned
 
