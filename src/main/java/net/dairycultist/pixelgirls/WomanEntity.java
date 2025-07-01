@@ -10,8 +10,7 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    private int variantID;
-    public String name;
+    private WomanVariants variant;
 
     public WomanEntity(World world) {
         this(world, WomanVariants.values()[(int) (Math.random() * WomanVariants.values().length)]);
@@ -28,13 +27,16 @@ public class WomanEntity extends AnimalEntity {
 
     public void setVariant(WomanVariants variant) {
 
-        this.name = variant.name;
-        this.variantID = variant.id;
+        this.variant = variant;
 
         this.texture =
                 "/assets/pixelgirls/stationapi/textures/entity/"
-                + this.name.toLowerCase().replace(' ', '_')
+                + variant.name.toLowerCase().replace(' ', '_')
                 + ".png";
+    }
+
+    public WomanVariants getVariant() {
+        return variant;
     }
 
     @Override
@@ -112,7 +114,7 @@ public class WomanEntity extends AnimalEntity {
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
-        nbt.putInt("VariantID", this.variantID);
+        nbt.putInt("VariantID", this.variant.id);
     }
 
     @Override
