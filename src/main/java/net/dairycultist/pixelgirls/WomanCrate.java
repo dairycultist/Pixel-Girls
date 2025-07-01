@@ -1,6 +1,5 @@
 package net.dairycultist.pixelgirls;
 
-import net.dairycultist.pixelgirls.entity.WomanEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;

@@ -1,4 +1,4 @@
-package net.dairycultist.pixelgirls.entity;
+package net.dairycultist.pixelgirls;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AnimalEntity;

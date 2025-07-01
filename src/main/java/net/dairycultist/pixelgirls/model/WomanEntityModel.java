@@ -1,8 +1,7 @@
-package net.dairycultist.pixelgirls.entity;
+package net.dairycultist.pixelgirls.model;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.util.math.MathHelper;
 
 public class WomanEntityModel extends BipedEntityModel {
 

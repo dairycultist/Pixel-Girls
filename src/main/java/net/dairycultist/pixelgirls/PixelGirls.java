@@ -1,20 +1,16 @@
 package net.dairycultist.pixelgirls;
 
-import net.dairycultist.pixelgirls.entity.WomanEntity;
-import net.dairycultist.pixelgirls.entity.WomanEntityModel;
+import net.dairycultist.pixelgirls.model.ShortstackEntityModel;
+import net.dairycultist.pixelgirls.model.WomanEntityModel;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.client.event.render.entity.EntityRendererRegisterEvent;
 import net.modificationstation.stationapi.api.event.entity.EntityRegister;
 import net.modificationstation.stationapi.api.event.registry.BlockRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.Null;
-
-import java.util.Random;
 
 public class PixelGirls {
 
@@ -43,6 +39,6 @@ public class PixelGirls {
     @EventListener
     public void registerEntityRenderer(EntityRendererRegisterEvent event) {
 
-        event.renderers.put(WomanEntity.class, new LivingEntityRenderer(new WomanEntityModel(), 0.5f));
+        event.renderers.put(WomanEntity.class, new LivingEntityRenderer(new ShortstackEntityModel(), 0.5f));
     }
 }
