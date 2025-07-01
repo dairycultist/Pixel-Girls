@@ -23,15 +23,13 @@ public class ShortstackEntityModel extends BipedEntityModel {
         this.rightArm.addCuboid(-3f, -2f, -2f, 4, 10, 4);
         this.rightArm.pivotY += 2f;
 
-        this.leftLeg.roll = (float) (Math.PI / 16);
-        this.rightLeg.roll = (float) (-Math.PI / 16);
-
-
         this.leftLeg.addCuboid(-2.5f, 0f, -2.5f, 5, 12, 5);
         this.leftLeg.pivotX += 1f;
+        this.leftLeg.roll = (float) (Math.PI / 16);
 
         this.rightLeg.addCuboid(-2.5f, 0f, -2.5f, 5, 12, 5);
         this.rightLeg.pivotX -= 1f;
+        this.rightLeg.roll = (float) (-Math.PI / 16);
 
         this.breasts = new ModelPart(40, 0);
         this.breasts.addCuboid(0f, 0f, -5f, 10, 5, 5);
@@ -39,8 +37,6 @@ public class ShortstackEntityModel extends BipedEntityModel {
         this.breasts.pitch = (float) (Math.PI / 8);
     }
 
-    // override cuz we don't want to render the hat
-    @Override
     public void render(float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, float scale) {
 
         this.setAngles(limbAngle, limbDistance, animationProgress, headYaw, headPitch, scale);

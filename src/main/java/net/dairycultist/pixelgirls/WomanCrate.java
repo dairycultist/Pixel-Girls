@@ -10,9 +10,9 @@ import java.util.Random;
 
 public class WomanCrate extends TemplateBlock {
 
-    private final WomanEntity.VariantPool variantPool;
+    private final WomanVariants[] variantPool;
 
-    public WomanCrate(Identifier identifier, WomanEntity.VariantPool variantPool) {
+    public WomanCrate(Identifier identifier, WomanVariants[] variantPool) {
         super(identifier, Material.WOOD);
 
         this.setHardness(0.8F);
@@ -25,7 +25,7 @@ public class WomanCrate extends TemplateBlock {
 
     public void onBreak(World world, int x, int y, int z) {
 
-        Entity e = new WomanEntity(world, variantPool);
+        Entity e = new WomanEntity(world, variantPool[(int) (Math.random() * variantPool.length)]);
         e.setPosition(x + 0.5, y, z + 0.5);
         world.spawnEntity(e);
     }

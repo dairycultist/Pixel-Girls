@@ -23,10 +23,10 @@ public class PixelGirls {
     @EventListener
     public void registerBlocks(BlockRegistryEvent event) {
 
-        OVERWORLD_CRATE = new WomanCrate(NAMESPACE.id("overworld_crate"), WomanEntity.VariantPool.OVERWORLD)
+        OVERWORLD_CRATE = new WomanCrate(NAMESPACE.id("overworld_crate"), WomanVariants.OVERWORLD_POOL)
         .setTranslationKey(NAMESPACE, "overworld_crate");
 
-        NETHER_CRATE = new WomanCrate(NAMESPACE.id("nether_crate"), WomanEntity.VariantPool.NETHER)
+        NETHER_CRATE = new WomanCrate(NAMESPACE.id("nether_crate"), WomanVariants.NETHER_POOL)
                 .setTranslationKey(NAMESPACE, "nether_crate");
     }
 

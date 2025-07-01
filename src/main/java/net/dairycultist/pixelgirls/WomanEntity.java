@@ -10,39 +10,26 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    public enum VariantPool {
-
-        OVERWORLD(new String[] { "Miku", "Koishi", "Sakura Miku", "Senko" }),
-        NETHER(new String[] { "Fiora" });
-
-        public final String[] names;
-
-        VariantPool(String[] names) { this.names = names; }
-    }
-
     private int variantID;
     public String name;
 
     public WomanEntity(World world) {
-        this(world, VariantPool.values()[(int) (Math.random() * VariantPool.values().length)]);
+        this(world, WomanVariants.values()[(int) (Math.random() * WomanVariants.values().length)]);
     }
 
-    public WomanEntity(World world, VariantPool variantPool) {
+    public WomanEntity(World world, WomanVariants variant) {
         super(world);
 
         this.maxHealth = 20;
         this.health    = 20;
 
-        this.setVariant(
-                this.random.nextInt(0, variantPool.names.length)
-                + variantPool.ordinal() * 100
-        );
+        this.setVariant(variant);
     }
 
-    public void setVariant(int variantID) {
+    public void setVariant(WomanVariants variant) {
 
-        this.variantID = variantID;
-        this.name = VariantPool.values()[variantID / 100].names[variantID % 100];
+        this.name = variant.name;
+        this.variantID = variant.id;
 
         this.texture =
                 "/assets/pixelgirls/stationapi/textures/entity/"
@@ -133,7 +120,7 @@ public class WomanEntity extends AnimalEntity {
         super.readNbt(nbt);
 
         if (nbt.contains("VariantID"))
-            this.setVariant(nbt.getInt("VariantID"));
+            this.setVariant(WomanVariants.values()[nbt.getInt("VariantID")]);
     }
 
     @Override
