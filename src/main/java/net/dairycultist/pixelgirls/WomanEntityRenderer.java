@@ -17,7 +17,7 @@ public class WomanEntityRenderer extends LivingEntityRenderer {
 
     public void render(LivingEntity livingEntity, double d, double e, double f, float g, float h) {
 
-        if (((WomanEntity) livingEntity).name.equals("Miku")) {
+        if (((WomanEntity) livingEntity).getVariant() == WomanVariants.MIKU) {
             model = MODEL_SHORTSTACK;
         } else {
             model = MODEL_GENERIC;
