@@ -1,12 +1,13 @@
 package net.dairycultist.pixelgirls.model;
 
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.entity.model.EntityModel;
 
-public class CowWomanEntityModel extends ShortstackEntityModel {
+public class CowWomanDecorationModel extends EntityModel {
 
     public ModelPart bell;
 
-    public CowWomanEntityModel() {
+    public CowWomanDecorationModel() {
         super();
 
         // make cow features an accessory? same with miku braids
@@ -18,7 +19,6 @@ public class CowWomanEntityModel extends ShortstackEntityModel {
     }
 
     public void render(float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, float scale) {
-        super.render(limbAngle, limbDistance, animationProgress, headYaw, headPitch, scale);
 
         this.bell.render(scale);
     }
