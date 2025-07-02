@@ -7,15 +7,14 @@ public class CowWomanDecorationModel extends EntityModel {
 
     public ModelPart bell;
 
-    public CowWomanDecorationModel() {
+    public CowWomanDecorationModel(float headPivotY) {
         super();
 
-        // make cow features an accessory? same with miku braids
         // TODO add cow ears and cow horns
 
         this.bell = new ModelPart(32, 11);
         this.bell.addCuboid(-2.5f, 0f, 0f, 5, 2, 5);
-        this.bell.setPivot(0f, 2.5f, -6f);
+        this.bell.setPivot(0f, headPivotY + 0.5f, -6f);
     }
 
     public void render(float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, float scale) {

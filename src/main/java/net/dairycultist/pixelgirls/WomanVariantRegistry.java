@@ -13,14 +13,16 @@ public class WomanVariantRegistry {
     public static final ArrayList<WomanVariantRegistry> OVERWORLD_POOL = new ArrayList<WomanVariantRegistry>();
     public static final ArrayList<WomanVariantRegistry> NETHER_POOL    = new ArrayList<WomanVariantRegistry>();
 
+    // will add MikuDecorationModel later for twintails
     public static final WomanVariantRegistry MIKU = new WomanVariantRegistry("Miku", true);
+//            .model(new WomanEntityModel(), new CowWomanDecorationModel(0f));
     public static final WomanVariantRegistry CHONKY_MIKU = new WomanVariantRegistry("Chonky Miku", true)
                                                            .model(new ShortstackEntityModel());
     public static final WomanVariantRegistry KOISHI = new WomanVariantRegistry("Koishi", true);
     public static final WomanVariantRegistry SAKURA_MIKU = new WomanVariantRegistry("Sakura Miku", false);
     public static final WomanVariantRegistry SENKO = new WomanVariantRegistry("Senko", false);
     public static final WomanVariantRegistry URT = new WomanVariantRegistry("Urt", true)
-                                                   .model(new ShortstackEntityModel(), new CowWomanDecorationModel())
+                                                   .model(new ShortstackEntityModel(), new CowWomanDecorationModel(2f))
                                                    .sound("mob.cow", "mob.cowhurt", "mob.cowhurt");
 
     private static int NEXT_ID = 0;
