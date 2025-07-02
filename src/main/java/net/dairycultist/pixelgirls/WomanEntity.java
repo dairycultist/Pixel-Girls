@@ -10,13 +10,13 @@ import net.minecraft.world.World;
 
 public class WomanEntity extends AnimalEntity {
 
-    private WomanVariants variant;
+    private WomanVariantRegistry variant;
 
     public WomanEntity(World world) {
-        this(world, WomanVariants.values()[(int) (Math.random() * WomanVariants.values().length)]);
+        this(world, WomanVariantRegistry.ALL_POOL.get((int) (Math.random() * WomanVariantRegistry.ALL_POOL.size())));
     }
 
-    public WomanEntity(World world, WomanVariants variant) {
+    public WomanEntity(World world, WomanVariantRegistry variant) {
         super(world);
 
         this.maxHealth = 20;
@@ -25,7 +25,7 @@ public class WomanEntity extends AnimalEntity {
         this.setVariant(variant);
     }
 
-    public void setVariant(WomanVariants variant) {
+    public void setVariant(WomanVariantRegistry variant) {
 
         this.variant = variant;
 
@@ -35,7 +35,7 @@ public class WomanEntity extends AnimalEntity {
                 + ".png";
     }
 
-    public WomanVariants getVariant() {
+    public WomanVariantRegistry getVariant() {
         return variant;
     }
 
@@ -122,7 +122,7 @@ public class WomanEntity extends AnimalEntity {
         super.readNbt(nbt);
 
         if (nbt.contains("VariantID"))
-            this.setVariant(WomanVariants.values()[nbt.getInt("VariantID")]);
+            this.setVariant(WomanVariantRegistry.ALL_POOL.get(nbt.getInt("VariantID")));
     }
 
     @Override

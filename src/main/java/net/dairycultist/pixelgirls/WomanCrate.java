@@ -6,13 +6,14 @@ import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.template.block.TemplateBlock;
 import net.modificationstation.stationapi.api.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class WomanCrate extends TemplateBlock {
 
-    private final WomanVariants[] variantPool;
+    private final ArrayList<WomanVariantRegistry> variantPool;
 
-    public WomanCrate(Identifier identifier, WomanVariants[] variantPool) {
+    public WomanCrate(Identifier identifier, ArrayList<WomanVariantRegistry> variantPool) {
         super(identifier, Material.WOOD);
 
         this.setHardness(0.8F);
@@ -25,7 +26,7 @@ public class WomanCrate extends TemplateBlock {
 
     public void onBreak(World world, int x, int y, int z) {
 
-        Entity e = new WomanEntity(world, variantPool[(int) (Math.random() * variantPool.length)]);
+        Entity e = new WomanEntity(world, variantPool.get((int) (Math.random() * variantPool.size())));
         e.setPosition(x + 0.5, y, z + 0.5);
         world.spawnEntity(e);
     }
