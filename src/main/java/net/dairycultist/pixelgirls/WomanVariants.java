@@ -14,7 +14,7 @@ public enum WomanVariants {
     KOISHI("Koishi"),
     SAKURA_MIKU("Sakura Miku"),
     SENKO("Senko"),
-    URT("Urt", new CowWomanEntityModel());
+    URT("Urt", new CowWomanEntityModel(), "mob.cow", "mob.cowhurt", "mob.cowhurt");
 
     public static final WomanVariants[] OVERWORLD_POOL = { MIKU, KOISHI, SAKURA_MIKU };
     public static final WomanVariants[] NETHER_POOL = { SENKO };
