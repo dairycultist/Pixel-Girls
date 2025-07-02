@@ -15,6 +15,7 @@
 - Koishi (from _Touhou Project_) ([skin base](https://www.planetminecraft.com/skin/koishi-komeiji-brambly-rose-garden/))
 - Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/717b6544a421153e))
 - Sakura Miku (from _Vocaloid_) ([skin base](https://namemc.com/skin/01a81d090e883142))
+- Urt (from _Monster Musume_) (skin completely custom)
 
 ### Women to add
 
