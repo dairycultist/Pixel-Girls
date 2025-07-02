@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class WomanVariantRegistry {
 
+    public static final ArrayList<WomanVariantRegistry> ALL_POOL       = new ArrayList<WomanVariantRegistry>();
+    public static final ArrayList<WomanVariantRegistry> OVERWORLD_POOL = new ArrayList<WomanVariantRegistry>();
+    public static final ArrayList<WomanVariantRegistry> NETHER_POOL    = new ArrayList<WomanVariantRegistry>();
+
     public static final WomanVariantRegistry MIKU = new WomanVariantRegistry("Miku", true);
     public static final WomanVariantRegistry CHONKY_MIKU = new WomanVariantRegistry("Chonky Miku", true)
                                                            .model(new ShortstackEntityModel());
@@ -18,10 +22,6 @@ public class WomanVariantRegistry {
     public static final WomanVariantRegistry URT = new WomanVariantRegistry("Urt", true)
                                                    .model(new ShortstackEntityModel(), new CowWomanDecorationModel())
                                                    .sound("mob.cow", "mob.cowhurt", "mob.cowhurt");
-
-    public static ArrayList<WomanVariantRegistry> ALL_POOL;
-    public static ArrayList<WomanVariantRegistry> OVERWORLD_POOL;
-    public static ArrayList<WomanVariantRegistry> NETHER_POOL;
 
     private static int NEXT_ID = 0;
 
@@ -36,12 +36,6 @@ public class WomanVariantRegistry {
     public String deathSound = "mob.chickenhurt";
 
     public WomanVariantRegistry(String name, boolean trueIfOverworldElseNether) {
-
-        if (OVERWORLD_POOL == null) {
-            ALL_POOL = new ArrayList<WomanVariantRegistry>();
-            OVERWORLD_POOL = new ArrayList<WomanVariantRegistry>();
-            NETHER_POOL = new ArrayList<WomanVariantRegistry>();
-        }
 
         this.name = name;
         this.id = NEXT_ID++;
