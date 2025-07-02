@@ -1,5 +1,6 @@
 package net.dairycultist.pixelgirls;
 
+import net.dairycultist.pixelgirls.model.CowWomanEntityModel;
 import net.dairycultist.pixelgirls.model.ShortstackEntityModel;
 import net.dairycultist.pixelgirls.model.WomanEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -8,10 +9,12 @@ public enum WomanVariants {
 
     // I guess this would be easier to mod if it was a registry instead of an enum, and register them statically
 
-    MIKU("Miku", new ShortstackEntityModel()),
+    MIKU("Miku"),
+    CHONKY_MIKU("Chonky Miku", new ShortstackEntityModel()),
     KOISHI("Koishi"),
     SAKURA_MIKU("Sakura Miku"),
-    SENKO("Senko");
+    SENKO("Senko"),
+    URT("Urt", new CowWomanEntityModel());
 
     public static final WomanVariants[] OVERWORLD_POOL = { MIKU, KOISHI, SAKURA_MIKU };
     public static final WomanVariants[] NETHER_POOL = { SENKO };
