@@ -26,7 +26,7 @@ public class WomanEntityRenderer extends LivingEntityRenderer {
         if (this.decorationModel == null)
             return false;
 
-        this.bindTexture("/assets/pixelgirls/stationapi/textures/entity/urt.png");
+        this.bindTexture("/assets/pixelgirls/stationapi/textures/entity/cow_woman_decoration.png");
 
         return true;
     }
